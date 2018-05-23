@@ -26,11 +26,11 @@ public class StudentFormView extends JPanel {
 	private JList<String> UnassignSubjectCollection;
 	private JLabel NameInputLabel;
 	private JLabel SurnameInputLabel;
-	private JScrollPane jScrollPane2;
-	private JScrollPane jScrollPane3;
+	private JScrollPane UnassignSubjectPane;
+	private JScrollPane AssignSubjectPane;
 	private StudentsCollectionView studentCollectionView;
 
-	private DefaultListModel<String> UnassignedSubjectModel;
+	private DefaultListModel<String> UnassignedSubjectModel2;
 	private DefaultListModel<String> AssignedSubjectModel;
 	private boolean EditMode;
 	private int StudentSelectedId;
@@ -51,23 +51,23 @@ public class StudentFormView extends JPanel {
 		SurnameInput = new JTextField();
 		NameInputLabel = new JLabel();
 		SurnameInputLabel = new JLabel();
-		jScrollPane2 = new JScrollPane();
+		UnassignSubjectPane = new JScrollPane();
 		UnassignSubjectCollection = new JList<>();
 		AssignSubjectCollection = new JList<>();
 		AddSubjectButton = new JButton();
 		RemoveSubjectButton = new JButton();
 		SaveFormButton = new JButton();
-		jScrollPane3 = new JScrollPane();
+		AssignSubjectPane = new JScrollPane();
 
-		StudentFormLabel.setText("A�adir alumno");
+		StudentFormLabel.setText("Añadir alumno");
 
 		NameInputLabel.setText("Nombre");
 
 		SurnameInputLabel.setText("Apellidos");
 
-		jScrollPane2.setViewportView(UnassignSubjectCollection);
+		UnassignSubjectPane.setViewportView(UnassignSubjectCollection);
 
-		jScrollPane3.setViewportView(AssignSubjectCollection);
+		AssignSubjectPane.setViewportView(AssignSubjectCollection);
 
 		AddSubjectButton.setText("-->");
 		AddSubjectButton.addActionListener(new java.awt.event.ActionListener() {
@@ -95,52 +95,52 @@ public class StudentFormView extends JPanel {
 
 	private void initComponentsPosition() {
 
-		GroupLayout jPanel1Layout = new GroupLayout(this);
-		this.setLayout(jPanel1Layout);
-		jPanel1Layout.setHorizontalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addGroup(jPanel1Layout
+		GroupLayout layout = new GroupLayout(this);
+		this.setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addGroup(layout
 						.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addGroup(jPanel1Layout.createSequentialGroup().addContainerGap().addGroup(jPanel1Layout
+						.addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout
 								.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(StudentFormLabel)
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+								.addGroup(layout.createSequentialGroup()
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 												.addComponent(NameInput, GroupLayout.PREFERRED_SIZE, 72,
 														GroupLayout.PREFERRED_SIZE)
 												.addComponent(NameInputLabel))
 										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
-										.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 												.addComponent(SurnameInputLabel).addComponent(SurnameInput,
 														GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(jPanel1Layout.createSequentialGroup()
-										.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE, 101,
+								.addGroup(layout.createSequentialGroup()
+										.addComponent(UnassignSubjectPane, GroupLayout.PREFERRED_SIZE, 101,
 												GroupLayout.PREFERRED_SIZE)
 										.addGap(18, 18, 18)
-										.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 												.addComponent(AddSubjectButton).addComponent(RemoveSubjectButton))
-										.addGap(18, 18, 18).addComponent(jScrollPane3, GroupLayout.PREFERRED_SIZE, 101,
+										.addGap(18, 18, 18).addComponent(AssignSubjectPane, GroupLayout.PREFERRED_SIZE, 101,
 												GroupLayout.PREFERRED_SIZE))))
-						.addGroup(jPanel1Layout.createSequentialGroup().addGap(117, 117, 117)
+						.addGroup(layout.createSequentialGroup().addGap(117, 117, 117)
 								.addComponent(SaveFormButton)))
 						.addContainerGap(114, Short.MAX_VALUE)));
-		jPanel1Layout.setVerticalGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel1Layout.createSequentialGroup().addGap(26, 26, 26).addComponent(StudentFormLabel)
+		layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addGap(26, 26, 26).addComponent(StudentFormLabel)
 						.addGap(18, 18, 18)
-						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 								.addComponent(NameInputLabel).addComponent(SurnameInputLabel))
 						.addGap(4, 4, 4)
-						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 								.addComponent(NameInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE)
 								.addComponent(SurnameInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
 										GroupLayout.PREFERRED_SIZE))
-						.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-								.addGroup(jPanel1Layout.createSequentialGroup().addGap(56, 56, 56)
-										.addGroup(jPanel1Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-												.addComponent(jScrollPane2, GroupLayout.PREFERRED_SIZE,
+						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+								.addGroup(layout.createSequentialGroup().addGap(56, 56, 56)
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+												.addComponent(UnassignSubjectPane, GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-												.addComponent(jScrollPane3, GroupLayout.PREFERRED_SIZE,
+												.addComponent(AssignSubjectPane, GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
-								.addGroup(jPanel1Layout.createSequentialGroup().addGap(95, 95, 95)
+								.addGroup(layout.createSequentialGroup().addGap(95, 95, 95)
 										.addComponent(AddSubjectButton).addGap(33, 33, 33)
 										.addComponent(RemoveSubjectButton)))
 						.addGap(51, 51, 51).addComponent(SaveFormButton).addContainerGap(96, Short.MAX_VALUE)));
@@ -171,7 +171,7 @@ public class StudentFormView extends JPanel {
 	}
 
 	public void UpdateSubjectList(List<String> studentSubjectCollection) {
-		UnassignedSubjectModel = new DefaultListModel<>();
+		UnassignedSubjectModel2 = new DefaultListModel<>();
 		AssignedSubjectModel = new DefaultListModel<>();
 
 		for (int i = 0; i < studentFormPresenter.loadSubjects(); i++) {
@@ -179,10 +179,10 @@ public class StudentFormView extends JPanel {
 			if (studentSubjectCollection != null && studentSubjectCollection.contains(subject.toString())) {
 				AssignedSubjectModel.addElement(subject);
 			} else {
-				UnassignedSubjectModel.addElement(subject);
+				UnassignedSubjectModel2.addElement(subject);
 			}
 		}
-		UnassignSubjectCollection.setModel(UnassignedSubjectModel);
+		UnassignSubjectCollection.setModel(UnassignedSubjectModel2);
 		AssignSubjectCollection.setModel(AssignedSubjectModel);
 	}
 
@@ -191,9 +191,9 @@ public class StudentFormView extends JPanel {
 
 		for (int i = selectedIndex.length - 1; i >= 0; i--) {
 			int index = selectedIndex[i];
-			String item = UnassignedSubjectModel.getElementAt(index).toString();
+			String item = UnassignedSubjectModel2.getElementAt(index).toString();
 			AssignedSubjectModel.addElement(item);
-			UnassignedSubjectModel.remove(index);
+			UnassignedSubjectModel2.remove(index);
 		}
 	}
 
@@ -203,7 +203,7 @@ public class StudentFormView extends JPanel {
 		for (int i = selectedIndex.length - 1; i >= 0; i--) {
 			int index = selectedIndex[i];
 			String item = AssignedSubjectModel.getElementAt(index).toString();
-			UnassignedSubjectModel.addElement(item);
+			UnassignedSubjectModel2.addElement(item);
 			AssignedSubjectModel.remove(index);
 		}
 	}

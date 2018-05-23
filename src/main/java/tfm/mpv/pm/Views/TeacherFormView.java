@@ -6,6 +6,7 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
 import javax.swing.JPanel;
+import javax.swing.LayoutStyle;
 
 import tfm.mpv.pm.Presenters.TeacherFormPresenter;
 
@@ -30,11 +31,11 @@ public class TeacherFormView extends JPanel {
 	private javax.swing.JTextField SurnameInput;
 	private javax.swing.JButton SaveFormButton;
 	private javax.swing.JLabel NameInputLabel;
-	private javax.swing.JLabel UserNameInputLabel;
+	private javax.swing.JLabel SurnameInputLabel;
 	private javax.swing.JLabel UnassignSubjectsInputLabel;
 	private javax.swing.JLabel AssignSubjectInputLabel;
-	private javax.swing.JScrollPane jScrollPane1;
-	private javax.swing.JScrollPane jScrollPane2;
+	private javax.swing.JScrollPane UnassignSubjectsScrollPane;
+	private javax.swing.JScrollPane AssignSubjectPane;
 
 	public TeacherFormView() {
 		teacherFormPresenter = new TeacherFormPresenter();
@@ -48,7 +49,7 @@ public class TeacherFormView extends JPanel {
 		NameInput = new javax.swing.JTextField();
 		NameInputLabel = new javax.swing.JLabel();
 		SurnameInput = new javax.swing.JTextField();
-		UserNameInputLabel = new javax.swing.JLabel();
+		SurnameInputLabel = new javax.swing.JLabel();
 		UnassignSubjectCollection = new javax.swing.JList<>();
 		AssignSubjectCollection = new javax.swing.JList<>();
 		AddSubjectButton = new javax.swing.JButton();
@@ -56,13 +57,13 @@ public class TeacherFormView extends JPanel {
 		UnassignSubjectsInputLabel = new javax.swing.JLabel();
 		AssignSubjectInputLabel = new javax.swing.JLabel();
 		SaveFormButton = new javax.swing.JButton();
-		jScrollPane1 = new javax.swing.JScrollPane();
-		jScrollPane2 = new javax.swing.JScrollPane();
+		UnassignSubjectsScrollPane = new javax.swing.JScrollPane();
+		AssignSubjectPane = new javax.swing.JScrollPane();
 		TeacherFormLabel = new javax.swing.JLabel();
 
 		NameInputLabel.setText("Nombre");
 
-		UserNameInputLabel.setText("Apellidos");
+		SurnameInputLabel.setText("Apellidos");
 		TeacherFormLabel.setText("Nuevo profesor");
 
 		AddSubjectButton.setText("-->");
@@ -90,9 +91,9 @@ public class TeacherFormView extends JPanel {
 			}
 		});
 
-		jScrollPane1.setViewportView(UnassignSubjectCollection);
+		UnassignSubjectsScrollPane.setViewportView(UnassignSubjectCollection);
 
-		jScrollPane2.setViewportView(AssignSubjectCollection);
+		AssignSubjectPane.setViewportView(AssignSubjectCollection);
 
 		initComponentsPosition();
 	}
@@ -102,25 +103,60 @@ public class TeacherFormView extends JPanel {
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
 
-		layout.setHorizontalGroup(layout.createSequentialGroup().addGap(23, 23, 23)
-				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(TeacherFormLabel)
-						.addComponent(NameInputLabel).addComponent(NameInput).addComponent(UnassignSubjectsInputLabel)
-						.addComponent(jScrollPane1))
-				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGap(100)
-						.addComponent(AddSubjectButton).addComponent(RemoveSubjectButton).addComponent(SaveFormButton))
-				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(UserNameInputLabel)
-						.addComponent(SurnameInput).addComponent(AssignSubjectInputLabel).addComponent(jScrollPane2))
-				.addGap(23, 23, 23));
-
-		layout.setVerticalGroup(layout.createSequentialGroup().addGap(21, 21, 21).addGroup(layout
-				.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup().addComponent(TeacherFormLabel).addComponent(NameInputLabel)
-						.addComponent(NameInput).addComponent(UnassignSubjectsInputLabel).addComponent(jScrollPane1))
-				.addGroup(layout.createSequentialGroup().addGap(100).addComponent(AddSubjectButton)
-						.addComponent(RemoveSubjectButton).addComponent(SaveFormButton))
-				.addGroup(layout.createSequentialGroup().addComponent(UserNameInputLabel).addComponent(SurnameInput)
-						.addComponent(AssignSubjectInputLabel).addComponent(jScrollPane2)))
-				.addGap(21, 21, 21));
+		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addGroup(layout
+						.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout
+								.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(TeacherFormLabel)
+								.addGroup(layout.createSequentialGroup()
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+												.addComponent(NameInput, GroupLayout.PREFERRED_SIZE, 72,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(NameInputLabel))
+										.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+												.addComponent(SurnameInputLabel).addComponent(SurnameInput,
+														GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(layout.createSequentialGroup()
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+												.addComponent(UnassignSubjectsScrollPane, GroupLayout.PREFERRED_SIZE, 101,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(UnassignSubjectsInputLabel))
+										.addGap(18, 18, 18)
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+												.addComponent(AddSubjectButton).addComponent(RemoveSubjectButton))
+										.addGap(18, 18, 18)
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+												.addComponent(AssignSubjectPane, GroupLayout.PREFERRED_SIZE, 101,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(AssignSubjectInputLabel)))))
+						.addGroup(layout.createSequentialGroup().addGap(117, 117, 117)
+								.addComponent(SaveFormButton)))
+						.addContainerGap(114, Short.MAX_VALUE)));
+		layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addGap(26, 26, 26).addComponent(TeacherFormLabel)
+						.addGap(18, 18, 18)
+						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+								.addComponent(NameInputLabel).addComponent(SurnameInputLabel))
+						.addGap(4, 4, 4)
+						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+								.addComponent(NameInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE)
+								.addComponent(SurnameInput, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+										GroupLayout.PREFERRED_SIZE))
+						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+								.addGroup(layout.createSequentialGroup().addGap(56, 56, 56)
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+												.addComponent(UnassignSubjectsInputLabel).addComponent(AssignSubjectInputLabel))
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+												.addComponent(UnassignSubjectsScrollPane, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addComponent(AssignSubjectPane, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
+								.addGroup(layout.createSequentialGroup().addGap(95, 95, 95)
+										.addComponent(AddSubjectButton).addGap(33, 33, 33)
+										.addComponent(RemoveSubjectButton)))
+						.addGap(51, 51, 51).addComponent(SaveFormButton).addContainerGap(96, Short.MAX_VALUE)));
 	}
 
 	public void NewTeacherMode() {

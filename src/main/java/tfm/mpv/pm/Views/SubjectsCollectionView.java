@@ -20,7 +20,7 @@ public class SubjectsCollectionView extends JPanel {
 	private JButton EditButton;
 	private JButton NewSubjectButton;
 	private JTable SubjectTable;
-	private JScrollPane jScrollPane1;
+	private JScrollPane TableScrollPane;
 
 	private SubjectFormView subjectFormView;
 	private SubjectsCollectionPresenter subjectsCollectionPresenter;
@@ -36,13 +36,13 @@ public class SubjectsCollectionView extends JPanel {
 
 	private void initComponents() {
 
-		jScrollPane1 = new JScrollPane();
+		TableScrollPane = new JScrollPane();
 		SubjectTable = new JTable();
 		DeleteButton = new JButton();
 		EditButton = new JButton();
 		NewSubjectButton = new JButton();
 
-		jScrollPane1.setViewportView(SubjectTable);
+		TableScrollPane.setViewportView(SubjectTable);
 
 		DeleteButton.setText("Borrar");
 		DeleteButton.addActionListener(new java.awt.event.ActionListener() {
@@ -70,23 +70,23 @@ public class SubjectsCollectionView extends JPanel {
 
 	private void initComponentsPosition() {
 
-		GroupLayout jPanel2Layout = new GroupLayout(this);
-		this.setLayout(jPanel2Layout);
-		jPanel2Layout.setHorizontalGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(jPanel2Layout.createSequentialGroup().addGroup(jPanel2Layout
+		GroupLayout layout = new GroupLayout(this);
+		this.setLayout(layout);
+		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addGroup(layout
 						.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 425, GroupLayout.PREFERRED_SIZE)
-						.addGroup(jPanel2Layout.createSequentialGroup().addComponent(DeleteButton)
+						.addComponent(TableScrollPane, GroupLayout.PREFERRED_SIZE, 425, GroupLayout.PREFERRED_SIZE)
+						.addGroup(layout.createSequentialGroup().addComponent(DeleteButton)
 								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addComponent(EditButton)
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(NewSubjectButton)))
 						.addGap(0, 19, Short.MAX_VALUE)));
-		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(
+		layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(
 				GroupLayout.Alignment.TRAILING,
-				jPanel2Layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+				layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(TableScrollPane, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
 						.addGap(18, 18, 18)
-						.addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 								.addComponent(DeleteButton).addComponent(EditButton).addComponent(NewSubjectButton))
 						.addGap(203, 203, 203)));
 

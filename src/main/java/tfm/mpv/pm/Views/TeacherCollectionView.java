@@ -3,6 +3,7 @@ package tfm.mpv.pm.Views;
 import javax.swing.GroupLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.LayoutStyle;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
@@ -14,7 +15,7 @@ public class TeacherCollectionView extends JPanel {
 	private javax.swing.JButton EditTeacherButton;
 	private javax.swing.JButton NewTeacherButton;
 	private javax.swing.JTable TeachersTable;
-	private javax.swing.JScrollPane jScrollPane3;
+	private javax.swing.JScrollPane TableScrollPane;
 
 	private TeachersCollectionPresenter teacherCollectionPresenter;
 	private TableModel TeachersTableModel;
@@ -28,7 +29,7 @@ public class TeacherCollectionView extends JPanel {
 
 	private void initComponents() {
 
-		jScrollPane3 = new javax.swing.JScrollPane();
+		TableScrollPane = new javax.swing.JScrollPane();
 		TeachersTable = new javax.swing.JTable();
 		DeleteTeacherButton = new javax.swing.JButton();
 		EditTeacherButton = new javax.swing.JButton();
@@ -36,7 +37,7 @@ public class TeacherCollectionView extends JPanel {
 
 		UpdateTeacherTableData();
 
-		jScrollPane3.setViewportView(TeachersTable);
+		TableScrollPane.setViewportView(TeachersTable);
 
 		DeleteTeacherButton.setText("Borrar");
 		DeleteTeacherButton.addActionListener(new java.awt.event.ActionListener() {
@@ -63,18 +64,26 @@ public class TeacherCollectionView extends JPanel {
 	}
 
 	private void initComponentPostions() {
+
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
-
-		layout.setHorizontalGroup(layout.createParallelGroup().addGap(23, 23, 23).addComponent(jScrollPane3)
-				.addGroup(layout.createSequentialGroup().addComponent(DeleteTeacherButton)
-						.addComponent(EditTeacherButton).addComponent(NewTeacherButton))
-				.addGap(23, 23, 23));
-
-		layout.setVerticalGroup(layout.createSequentialGroup().addGap(21, 21, 21).addComponent(jScrollPane3)
-				.addGroup(layout.createParallelGroup().addComponent(DeleteTeacherButton).addComponent(EditTeacherButton)
-						.addComponent(NewTeacherButton))
-				.addGap(21, 21, 21));
+		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+				.addGroup(layout.createSequentialGroup().addGroup(layout
+						.createParallelGroup(GroupLayout.Alignment.LEADING)
+						.addComponent(TableScrollPane, GroupLayout.PREFERRED_SIZE, 425, GroupLayout.PREFERRED_SIZE)
+						.addGroup(layout.createSequentialGroup().addComponent(DeleteTeacherButton)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addComponent(EditTeacherButton)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+								.addComponent(NewTeacherButton)))
+						.addGap(0, 19, Short.MAX_VALUE)));
+		layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(
+				GroupLayout.Alignment.TRAILING,
+				layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+						.addComponent(TableScrollPane, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+						.addGap(18, 18, 18)
+						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+								.addComponent(DeleteTeacherButton).addComponent(EditTeacherButton).addComponent(NewTeacherButton))
+						.addGap(203, 203, 203)));
 	}
 
 	public void UpdateTeacherTableData() {
