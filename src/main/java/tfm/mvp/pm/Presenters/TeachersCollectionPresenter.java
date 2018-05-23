@@ -1,10 +1,10 @@
-package tfm.mpv.pm.Presenters;
+package tfm.mvp.pm.Presenters;
 
 import java.util.List;
 
-import tfm.mpv.pm.Models.Subject;
-import tfm.mpv.pm.Models.Teacher;
-import tfm.mpv.pm.Models.TeacherDto;
+import tfm.mvp.pm.Models.Subject;
+import tfm.mvp.pm.Models.Teacher;
+import tfm.mvp.pm.Models.TeacherDto;
 
 public class TeachersCollectionPresenter {
 

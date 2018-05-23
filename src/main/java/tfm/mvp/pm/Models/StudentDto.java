@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tfm.mpv.pm.Models;
+package tfm.mvp.pm.Models;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,105 +15,101 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 /**
  *
  * @author borja
  */
-public class TeacherDto extends Dto {
+public class StudentDto extends Dto {
 
-	public TeacherDto() {
-		super();
-	}
-
-	public ResultSet Insert(Teacher teacher) {
+	public ResultSet Insert(Student student) {
 		Connection conexion = null;
-		ResultSet result = null;
+		ResultSet aux = null;
 		try {
-
 			conexion = basicDataSource.getConnection();
 
-			String sql = "INSERT INTO TEACHER (NAME,SURNAME) VALUES(?,?)";
+			String sql = "INSERT INTO STUDENT (NAME,SURNAME) VALUES(?,?)";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			sentencia1.setString(1, teacher.getName());
-			sentencia1.setString(2, teacher.getSurname());
+			sentencia1.setString(1, student.getName());
+			sentencia1.setString(2, student.getSurname());
 
 			sentencia1.executeUpdate();
-			result = sentencia1.getGeneratedKeys();
+			aux = sentencia1.getGeneratedKeys();
 			int id = -1;
-			if (result.next()) {
-				id = result.getInt(1);
+			if (aux.next()) {
+				id = aux.getInt(1);
 			}
 
-			for (Subject subject : teacher.getSubjectCollection()) {
-				InsertSubjectTeacher(id, subject.getId());
+			for (Subject subject : student.getSubjectCollection()) {
+				InsertSubjectStudent(id, subject.getId());
 			}
 
 			sentencia1.close();
 		} catch (SQLException ex) {
-			Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
-
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
 				} catch (SQLException ex) {
-					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
-		return result;
+		return aux;
 	}
 
-	public void Update(Teacher teacher) {
+	public void Update(Student student) {
 		Connection conexion = null;
 
 		try {
-
 			conexion = basicDataSource.getConnection();
 
-			String sql = "UPDATE TEACHER  SET NAME = ?, SURNAME = ? WHERE ID= ?";
+			String sql = "UPDATE STUDENT  SET NAME = ?, SURNAME = ? WHERE ID= ?";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_UPDATABLE, Statement.RETURN_GENERATED_KEYS);
-			sentencia1.setString(1, teacher.getName());
-			sentencia1.setString(2, teacher.getSurname());
-			sentencia1.setInt(3, teacher.getId());
+			sentencia1.setString(1, student.getName());
+			sentencia1.setString(2, student.getSurname());
+			sentencia1.setInt(3, student.getId());
 
-			RemoveAllTeacherSubjects(teacher.getId());
-			for (Subject subject : teacher.getSubjectCollection()) {
-				InsertSubjectTeacher(teacher.getId(), subject.getId());
+			RemoveAllStudentSubjects(student.getId());
+			for (Subject subject : student.getSubjectCollection()) {
+				InsertSubjectStudent(student.getId(), subject.getId());
 			}
 
 			sentencia1.executeUpdate();
 
 			sentencia1.close();
-		} catch (SQLException exx) {
+		} catch (SQLException ex) {
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
 				} catch (SQLException ex) {
-					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 		}
 	}
 
-	public List<Teacher> GetAll() {
+	public List<Student> GetAll() {
 
-		List<Teacher> result = new ArrayList<Teacher>();
+		List<Student> result = new ArrayList<Student>();
 		Connection conexion = null;
 
 		try {
 			conexion = basicDataSource.getConnection();
 
 			Statement sentencia = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			ResultSet rs = sentencia.executeQuery("SELECT * FROM TEACHER ");
+			ResultSet rs = sentencia.executeQuery("SELECT * FROM STUDENT ");
 
 			rs.afterLast();
 			while (rs.previous()) {
 
-				Teacher teacher = new Teacher(rs.getInt("ID"), rs.getString(2), rs.getString(3));
-				String sql = "SELECT * FROM SUBJECT S " + "INNER JOIN TEACHER_SUBJECT TS " + "ON S.ID = TS.ID_SUBJECT "
-						+ "WHERE TS.ID_TEACHER = ?";
+				Student student = new Student(rs.getInt("ID"), rs.getString(2), rs.getString(3));
+				String sql = "SELECT * FROM SUBJECT S " + "INNER JOIN STUDENT_SUBJECT SS " + "ON S.ID = SS.ID_SUBJECT "
+						+ "WHERE SS.ID_STUDENT = ?";
 
 				PreparedStatement sentenciaSubject = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
 						ResultSet.CONCUR_UPDATABLE);
@@ -122,45 +117,45 @@ public class TeacherDto extends Dto {
 
 				ResultSet rsSuebjects = sentenciaSubject.executeQuery();
 				while (rsSuebjects.next()) {
-					teacher.getSubjectCollection().add(new Subject(rsSuebjects.getInt("ID"),
+					student.getSubjectCollection().add(new Subject(rsSuebjects.getInt("ID"),
 							rsSuebjects.getString("TITLE"), rsSuebjects.getInt("COURSE")));
 				}
-				result.add(teacher);
+				result.add(student);
 
 			}
 		} catch (SQLException ex) {
-			Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
 				} catch (SQLException ex) {
-					// TODO Auto-generated catch block
-					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
 		return result;
 	}
 
-	public Teacher Get(int id) {
+	public Student Get(int id) {
 		Connection conexion = null;
-		Teacher teacher = null;
+		Student student = null;
 		try {
 			conexion = basicDataSource.getConnection();
 
-			String sql = "SELECT T.* , S.ID AS SUBJECT_ID , S.TITLE , S.COURSE FROM TEACHER T "
-					+ "LEFT JOIN TEACHER_SUBJECT TS " + "ON T.ID = TS.ID_TEACHER " + "LEFT JOIN SUBJECT S "
-					+ "ON TS.ID_SUBJECT = S.ID " + " WHERE T.ID = ?";
+			String sql = "SELECT S.* , SUB.ID AS SUBJECT_ID , SUB.TITLE , SUB.COURSE " + "FROM STUDENT S "
+					+ "LEFT JOIN STUDENT_SUBJECT SS " + "ON S.ID = SS.ID_STUDENT " + "LEFT JOIN SUBJECT SUB "
+					+ "ON SS.ID_SUBJECT = SUB.ID " + " WHERE S.ID = ?";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
 			sentencia1.setInt(1, id);
 
 			ResultSet rs = sentencia1.executeQuery();
-			teacher = new Teacher();
+			student = new Student();
 			List<Subject> subjectCollection = new ArrayList<>();
 			if (rs.next()) {
-				teacher = new Teacher(rs.getInt("ID"), rs.getString("NAME"), rs.getString("SURNAME"));
+				student = new Student(rs.getInt("ID"), rs.getString("NAME"), rs.getString("SURNAME"));
 
 				do {
 					if (rs.getString("TITLE") != null) {
@@ -169,21 +164,22 @@ public class TeacherDto extends Dto {
 					}
 				} while (rs.next());
 			}
-			teacher.setSubjectCollection(subjectCollection);
+			student.setSubjectCollection(subjectCollection);
 
 			sentencia1.close();
 		} catch (SQLException ex) {
-			Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
 				} catch (SQLException ex) {
-					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 		}
-
-		return teacher;
+		return student;
 	}
 
 	public void Remove(int id) {
@@ -191,74 +187,72 @@ public class TeacherDto extends Dto {
 		try {
 			conexion = basicDataSource.getConnection();
 
-			String sql = "DELETE FROM  TEACHER WHERE ID = ?";
+			String sql = "DELETE FROM  STUDENT WHERE ID = ?";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_UPDATABLE, Statement.RETURN_GENERATED_KEYS);
 			sentencia1.setInt(1, id);
 
 			sentencia1.executeUpdate();
 			sentencia1.close();
-
 		} catch (SQLException ex) {
-			Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
 				} catch (SQLException ex) {
-					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
 	}
 
-	public void RemoveAllTeacherSubjects(int idTeacher) {
+	public void RemoveAllStudentSubjects(int idStudent) {
+		Connection conexion = null;
+		try {
+			conexion = basicDataSource.getConnection();
+			String sql = "DELETE FROM  STUDENT_SUBJECT WHERE ID_STUDENT = ?";
+			PreparedStatement sentencia1 = conexion.prepareStatement(sql);
+			sentencia1.setInt(1, idStudent);
+
+			sentencia1.executeUpdate();
+		} catch (SQLException ex) {
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
+		} finally {
+			if (conexion != null)
+				try {
+					conexion.close();
+				} catch (SQLException ex) {
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
+				}
+		}
+	}
+
+	public void InsertSubjectStudent(int idStudent, int idSubject) {
+
 		Connection conexion = null;
 
 		try {
 			conexion = basicDataSource.getConnection();
-			String sql = "DELETE FROM  TEACHER_SUBJECT WHERE ID_TEACHER = ?";
-			PreparedStatement sentencia1 = conexion.prepareStatement(sql);
-			sentencia1.setInt(1, idTeacher);
-
-			sentencia1.executeUpdate();
-		} catch (SQLException ex) {
-			Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
-		} finally {
-			if (conexion != null)
-				try {
-					conexion.close();
-				} catch (SQLException ex) {
-
-					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
-				}
-		}
-
-	}
-
-	public void InsertSubjectTeacher(int idTeacher, int idSubject) {
-
-		Connection conexion = null;
-
-		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
-			String sql = "INSERT INTO TEACHER_SUBJECT (ID_SUBJECT,ID_TEACHER) VALUES(?,?)";
+			String sql = "INSERT INTO STUDENT_SUBJECT (ID_SUBJECT,ID_STUDENT) VALUES(?,?)";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			sentencia1.setInt(1, idSubject);
-			sentencia1.setInt(2, idTeacher);
+			sentencia1.setInt(2, idStudent);
 
 			sentencia1.executeUpdate();
-		} catch (ClassNotFoundException | SQLException ex) {
-			Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
+		} catch ( SQLException ex) {
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
 				} catch (SQLException ex) {
-					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 		}
-
 	}
 }

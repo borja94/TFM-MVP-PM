@@ -1,9 +1,9 @@
-package tfm.mpv.pm.Presenters;
+package tfm.mvp.pm.Presenters;
 
 import java.util.List;
 
-import tfm.mpv.pm.Models.Subject;
-import tfm.mpv.pm.Models.SubjectDto;
+import tfm.mvp.pm.Models.Subject;
+import tfm.mvp.pm.Models.SubjectDto;
 
 public class SubjectsCollectionPresenter {
 

@@ -1,4 +1,4 @@
-package tfm.mpv.pm.Models;
+package tfm.mvp.pm.Models;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

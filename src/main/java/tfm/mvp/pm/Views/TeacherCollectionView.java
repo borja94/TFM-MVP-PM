@@ -1,4 +1,4 @@
-package tfm.mpv.pm.Views;
+package tfm.mvp.pm.Views;
 
 import javax.swing.GroupLayout;
 import javax.swing.JOptionPane;
@@ -7,7 +7,7 @@ import javax.swing.LayoutStyle;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
-import tfm.mpv.pm.Presenters.TeachersCollectionPresenter;
+import tfm.mvp.pm.Presenters.TeachersCollectionPresenter;
 
 public class TeacherCollectionView extends JPanel {
 

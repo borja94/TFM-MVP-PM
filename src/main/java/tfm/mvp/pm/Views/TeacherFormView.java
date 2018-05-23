@@ -1,73 +1,70 @@
-package tfm.mpv.pm.Views;
+package tfm.mvp.pm.Views;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import javax.swing.DefaultListModel;
 import javax.swing.GroupLayout;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextField;
 import javax.swing.LayoutStyle;
 
-import tfm.mpv.pm.Presenters.StudentFormPresenter;
+import tfm.mvp.pm.Presenters.TeacherFormPresenter;
 
-public class StudentFormView extends JPanel {
+public class TeacherFormView extends JPanel {
 
-	private JButton AddSubjectButton;
-	private JList<String> AssignSubjectCollection;
-	private JTextField NameInput;
-	private JButton RemoveSubjectButton;
-	private JButton SaveFormButton;
-	private JLabel StudentFormLabel;
-	private JTextField SurnameInput;
-	private JList<String> UnassignSubjectCollection;
-	private JLabel NameInputLabel;
-	private JLabel SurnameInputLabel;
-	private JScrollPane UnassignSubjectPane;
-	private JScrollPane AssignSubjectPane;
-	private StudentsCollectionView studentCollectionView;
+	private TeacherFormPresenter teacherFormPresenter;
 
-	private DefaultListModel<String> UnassignedSubjectModel2;
+	private DefaultListModel<String> UnassignedSubjectModel;
 	private DefaultListModel<String> AssignedSubjectModel;
+	private static final String NewTeacherLabelText = "Nuevo profesor";
+	private static final String EditTeacherLabelText = "Editar profesor";
+	private int TeacherSelectedId;
+	private TeacherCollectionView teacherCollectionView;
 	private boolean EditMode;
-	private int StudentSelectedId;
-	private StudentFormPresenter studentFormPresenter;
-	private static final String NewStudentLabelText = "Nuevo alumno";
-	private static final String EditStudentLabelText = "Editar alumno";
 
-	public StudentFormView() {
-		studentFormPresenter = new StudentFormPresenter();
+	private javax.swing.JLabel TeacherFormLabel;
+	private javax.swing.JButton AddSubjectButton;
+	private javax.swing.JButton RemoveSubjectButton;
+	private javax.swing.JList<String> AssignSubjectCollection;
+	private javax.swing.JList<String> UnassignSubjectCollection;
+	private javax.swing.JTextField NameInput;
+	private javax.swing.JTextField SurnameInput;
+	private javax.swing.JButton SaveFormButton;
+	private javax.swing.JLabel NameInputLabel;
+	private javax.swing.JLabel SurnameInputLabel;
+	private javax.swing.JLabel UnassignSubjectsInputLabel;
+	private javax.swing.JLabel AssignSubjectInputLabel;
+	private javax.swing.JScrollPane UnassignSubjectsScrollPane;
+	private javax.swing.JScrollPane AssignSubjectPane;
+
+	public TeacherFormView() {
+		teacherFormPresenter = new TeacherFormPresenter();
 		initComponents();
 		UpdateSubjectList(null);
+
 	}
 
 	private void initComponents() {
 
-		StudentFormLabel = new JLabel();
-		NameInput = new JTextField();
-		SurnameInput = new JTextField();
-		NameInputLabel = new JLabel();
-		SurnameInputLabel = new JLabel();
-		UnassignSubjectPane = new JScrollPane();
-		UnassignSubjectCollection = new JList<>();
-		AssignSubjectCollection = new JList<>();
-		AddSubjectButton = new JButton();
-		RemoveSubjectButton = new JButton();
-		SaveFormButton = new JButton();
-		AssignSubjectPane = new JScrollPane();
-
-		StudentFormLabel.setText("Añadir alumno");
+		NameInput = new javax.swing.JTextField();
+		NameInputLabel = new javax.swing.JLabel();
+		SurnameInput = new javax.swing.JTextField();
+		SurnameInputLabel = new javax.swing.JLabel();
+		UnassignSubjectCollection = new javax.swing.JList<>();
+		AssignSubjectCollection = new javax.swing.JList<>();
+		AddSubjectButton = new javax.swing.JButton();
+		RemoveSubjectButton = new javax.swing.JButton();
+		UnassignSubjectsInputLabel = new javax.swing.JLabel();
+		AssignSubjectInputLabel = new javax.swing.JLabel();
+		SaveFormButton = new javax.swing.JButton();
+		UnassignSubjectsScrollPane = new javax.swing.JScrollPane();
+		AssignSubjectPane = new javax.swing.JScrollPane();
+		TeacherFormLabel = new javax.swing.JLabel();
 
 		NameInputLabel.setText("Nombre");
 
 		SurnameInputLabel.setText("Apellidos");
-
-		UnassignSubjectPane.setViewportView(UnassignSubjectCollection);
-
-		AssignSubjectPane.setViewportView(AssignSubjectCollection);
+		TeacherFormLabel.setText("Nuevo profesor");
 
 		AddSubjectButton.setText("-->");
 		AddSubjectButton.addActionListener(new java.awt.event.ActionListener() {
@@ -83,6 +80,10 @@ public class StudentFormView extends JPanel {
 			}
 		});
 
+		UnassignSubjectsInputLabel.setText("Asignaturas");
+
+		AssignSubjectInputLabel.setText("Asignaturas seleccionadas");
+
 		SaveFormButton.setText("Guardar");
 		SaveFormButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -90,18 +91,23 @@ public class StudentFormView extends JPanel {
 			}
 		});
 
+		UnassignSubjectsScrollPane.setViewportView(UnassignSubjectCollection);
+
+		AssignSubjectPane.setViewportView(AssignSubjectCollection);
+
 		initComponentsPosition();
 	}
 
-	private void initComponentsPosition() {
+	public void initComponentsPosition() {
 
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
+
 		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup().addGroup(layout
 						.createParallelGroup(GroupLayout.Alignment.LEADING)
 						.addGroup(layout.createSequentialGroup().addContainerGap().addGroup(layout
-								.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(StudentFormLabel)
+								.createParallelGroup(GroupLayout.Alignment.LEADING).addComponent(TeacherFormLabel)
 								.addGroup(layout.createSequentialGroup()
 										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 												.addComponent(NameInput, GroupLayout.PREFERRED_SIZE, 72,
@@ -112,18 +118,23 @@ public class StudentFormView extends JPanel {
 												.addComponent(SurnameInputLabel).addComponent(SurnameInput,
 														GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)))
 								.addGroup(layout.createSequentialGroup()
-										.addComponent(UnassignSubjectPane, GroupLayout.PREFERRED_SIZE, 101,
-												GroupLayout.PREFERRED_SIZE)
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+												.addComponent(UnassignSubjectsScrollPane, GroupLayout.PREFERRED_SIZE, 101,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(UnassignSubjectsInputLabel))
 										.addGap(18, 18, 18)
 										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 												.addComponent(AddSubjectButton).addComponent(RemoveSubjectButton))
-										.addGap(18, 18, 18).addComponent(AssignSubjectPane, GroupLayout.PREFERRED_SIZE, 101,
-												GroupLayout.PREFERRED_SIZE))))
+										.addGap(18, 18, 18)
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
+												.addComponent(AssignSubjectPane, GroupLayout.PREFERRED_SIZE, 101,
+														GroupLayout.PREFERRED_SIZE)
+												.addComponent(AssignSubjectInputLabel)))))
 						.addGroup(layout.createSequentialGroup().addGap(117, 117, 117)
 								.addComponent(SaveFormButton)))
 						.addContainerGap(114, Short.MAX_VALUE)));
 		layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup().addGap(26, 26, 26).addComponent(StudentFormLabel)
+				.addGroup(layout.createSequentialGroup().addGap(26, 26, 26).addComponent(TeacherFormLabel)
 						.addGap(18, 18, 18)
 						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 								.addComponent(NameInputLabel).addComponent(SurnameInputLabel))
@@ -135,8 +146,10 @@ public class StudentFormView extends JPanel {
 										GroupLayout.PREFERRED_SIZE))
 						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 								.addGroup(layout.createSequentialGroup().addGap(56, 56, 56)
+										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+												.addComponent(UnassignSubjectsInputLabel).addComponent(AssignSubjectInputLabel))
 										.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-												.addComponent(UnassignSubjectPane, GroupLayout.PREFERRED_SIZE,
+												.addComponent(UnassignSubjectsScrollPane, GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 												.addComponent(AssignSubjectPane, GroupLayout.PREFERRED_SIZE,
 														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)))
@@ -144,46 +157,47 @@ public class StudentFormView extends JPanel {
 										.addComponent(AddSubjectButton).addGap(33, 33, 33)
 										.addComponent(RemoveSubjectButton)))
 						.addGap(51, 51, 51).addComponent(SaveFormButton).addContainerGap(96, Short.MAX_VALUE)));
-
 	}
 
 	public void NewTeacherMode() {
-		StudentFormLabel.setText(NewStudentLabelText);
+		TeacherFormLabel.setText(NewTeacherLabelText);
 		NameInput.setText("");
 		SurnameInput.setText("");
 		UpdateSubjectList(null);
-		StudentSelectedId = 0;
+		TeacherSelectedId = 0;
 		EditMode = false;
 	}
 
 	public void EditTeacherMode(int id) {
-		StudentFormLabel.setText(EditStudentLabelText);
-		StudentSelectedId = id;
+		TeacherFormLabel.setText(EditTeacherLabelText);
+		TeacherSelectedId = id;
 		EditMode = true;
-		studentFormPresenter.loadStudent(id);
-		NameInput.setText(studentFormPresenter.getStudentName());
-		SurnameInput.setText(studentFormPresenter.getStudentSurName());
+		teacherFormPresenter.loadTeacher(id);
+		NameInput.setText(teacherFormPresenter.getTeacherName());
+		SurnameInput.setText(teacherFormPresenter.getTeacherSurName());
 		List<String> subject = new ArrayList<>();
-		for (int i = 0; i < studentFormPresenter.getStudentNumSubject(); i++) {
-			subject.add(studentFormPresenter.getStudentSubject(i));
+		for (int i = 0; i < teacherFormPresenter.getTeacherNumSubject(); i++) {
+			subject.add(teacherFormPresenter.getTeacherSubject(i));
 		}
 		UpdateSubjectList(subject);
 	}
 
-	public void UpdateSubjectList(List<String> studentSubjectCollection) {
-		UnassignedSubjectModel2 = new DefaultListModel<>();
+	private void UpdateSubjectList(List<String> teacherSubjectCollection) {
+
+		UnassignedSubjectModel = new DefaultListModel<>();
 		AssignedSubjectModel = new DefaultListModel<>();
 
-		for (int i = 0; i < studentFormPresenter.loadSubjects(); i++) {
-			String subject = studentFormPresenter.getSubjectByPosition(i);
-			if (studentSubjectCollection != null && studentSubjectCollection.contains(subject.toString())) {
+		for (int i = 0; i < teacherFormPresenter.loadSubjects(); i++) {
+			String subject = teacherFormPresenter.getSubjectByPosition(i);
+			if (teacherSubjectCollection != null && teacherSubjectCollection.contains(subject.toString())) {
 				AssignedSubjectModel.addElement(subject);
 			} else {
-				UnassignedSubjectModel2.addElement(subject);
+				UnassignedSubjectModel.addElement(subject);
 			}
 		}
-		UnassignSubjectCollection.setModel(UnassignedSubjectModel2);
+		UnassignSubjectCollection.setModel(UnassignedSubjectModel);
 		AssignSubjectCollection.setModel(AssignedSubjectModel);
+
 	}
 
 	private void AddSubjectButtonActionPerformed(java.awt.event.ActionEvent evt) {
@@ -191,9 +205,9 @@ public class StudentFormView extends JPanel {
 
 		for (int i = selectedIndex.length - 1; i >= 0; i--) {
 			int index = selectedIndex[i];
-			String item = UnassignedSubjectModel2.getElementAt(index).toString();
+			String item = UnassignedSubjectModel.getElementAt(index).toString();
 			AssignedSubjectModel.addElement(item);
-			UnassignedSubjectModel2.remove(index);
+			UnassignedSubjectModel.remove(index);
 		}
 	}
 
@@ -203,7 +217,7 @@ public class StudentFormView extends JPanel {
 		for (int i = selectedIndex.length - 1; i >= 0; i--) {
 			int index = selectedIndex[i];
 			String item = AssignedSubjectModel.getElementAt(index).toString();
-			UnassignedSubjectModel2.addElement(item);
+			UnassignedSubjectModel.addElement(item);
 			AssignedSubjectModel.remove(index);
 		}
 	}
@@ -215,15 +229,15 @@ public class StudentFormView extends JPanel {
 
 		if (!name.isEmpty() && !surname.isEmpty()) {
 			if (EditMode)
-				studentFormPresenter.UpdateStudent(name, surname, AssignedSubjectModel, StudentSelectedId);
+				teacherFormPresenter.UpdateTeacher(name, surname, AssignedSubjectModel, TeacherSelectedId);
 			else
-				studentFormPresenter.InsertNewStudent(name, surname, AssignedSubjectModel);
-			studentCollectionView.UpdateStudentTableData();
+				teacherFormPresenter.InsertNewTeacher(name, surname, AssignedSubjectModel);
+			teacherCollectionView.UpdateTeacherTableData();
 		}
 	}
 
-	public void setStudentCollectionView(StudentsCollectionView studentCollectionView) {
-		this.studentCollectionView = studentCollectionView;
+	public void setTeacherCollectionView(TeacherCollectionView teacherCollectionView) {
+		this.teacherCollectionView = teacherCollectionView;
 	}
 
 }

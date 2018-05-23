@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tfm.mpv.pm.Views;
+package tfm.mvp.pm.Views;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;

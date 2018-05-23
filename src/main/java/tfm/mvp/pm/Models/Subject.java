@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tfm.mpv.pm.Models;
+package tfm.mvp.pm.Models;
 
 import java.util.Objects;
 
