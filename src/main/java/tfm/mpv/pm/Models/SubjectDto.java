@@ -7,6 +7,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -33,14 +35,16 @@ public class SubjectDto extends Dto{
 			aux = sentencia1.getGeneratedKeys();
 
 			sentencia1.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(SubjectDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(SubjectDto.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 		}
 
@@ -60,14 +64,16 @@ public class SubjectDto extends Dto{
 			while (rs.next()) {
 				result.add(new Subject(rs.getInt("ID"), rs.getString("TITLE"), rs.getInt("COURSE")));
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(SubjectDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(SubjectDto.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 		}
 
@@ -91,14 +97,16 @@ public class SubjectDto extends Dto{
 				subject = new Subject(rs.getInt("ID"), rs.getString("TITLE"), rs.getInt("COURSE"));
 			}
 			sentencia1.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(SubjectDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(SubjectDto.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 		}
 		return subject;
@@ -117,14 +125,16 @@ public class SubjectDto extends Dto{
 
 			sentencia1.executeUpdate();
 			sentencia1.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(SubjectDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(SubjectDto.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 		}
 	}
@@ -145,14 +155,16 @@ public class SubjectDto extends Dto{
 			sentencia1.executeUpdate();
 
 			sentencia1.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(SubjectDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(SubjectDto.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 		}
 	}

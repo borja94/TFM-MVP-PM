@@ -6,13 +6,15 @@
 package tfm.mpv.pm.Models;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 
 /**
  *
@@ -43,14 +45,14 @@ public class StudentDto extends Dto {
 			}
 
 			sentencia1.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
@@ -78,14 +80,15 @@ public class StudentDto extends Dto {
 			sentencia1.executeUpdate();
 
 			sentencia1.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 		}
 	}
@@ -120,14 +123,15 @@ public class StudentDto extends Dto {
 				result.add(student);
 
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
@@ -163,14 +167,16 @@ public class StudentDto extends Dto {
 			student.setSubjectCollection(subjectCollection);
 
 			sentencia1.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 		}
 		return student;
@@ -188,14 +194,14 @@ public class StudentDto extends Dto {
 
 			sentencia1.executeUpdate();
 			sentencia1.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
@@ -204,21 +210,22 @@ public class StudentDto extends Dto {
 	public void RemoveAllStudentSubjects(int idStudent) {
 		Connection conexion = null;
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
+			conexion = basicDataSource.getConnection();
 			String sql = "DELETE FROM  STUDENT_SUBJECT WHERE ID_STUDENT = ?";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql);
 			sentencia1.setInt(1, idStudent);
 
 			sentencia1.executeUpdate();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 		}
 	}
@@ -228,22 +235,23 @@ public class StudentDto extends Dto {
 		Connection conexion = null;
 
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
+			conexion = basicDataSource.getConnection();
 			String sql = "INSERT INTO STUDENT_SUBJECT (ID_SUBJECT,ID_STUDENT) VALUES(?,?)";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			sentencia1.setInt(1, idSubject);
 			sentencia1.setInt(2, idStudent);
 
 			sentencia1.executeUpdate();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+		} catch ( SQLException ex) {
+			Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(StudentDto.class.getName()).log(Level.SEVERE, null, ex);
+
 				}
 		}
 	}

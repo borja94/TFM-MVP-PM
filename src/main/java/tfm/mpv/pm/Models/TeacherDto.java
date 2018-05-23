@@ -13,6 +13,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -48,14 +50,15 @@ public class TeacherDto extends Dto {
 			}
 
 			sentencia1.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
@@ -84,13 +87,13 @@ public class TeacherDto extends Dto {
 			sentencia1.executeUpdate();
 
 			sentencia1.close();
-		} catch (SQLException ex) {
+		} catch (SQLException exx) {
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 	}
@@ -125,15 +128,15 @@ public class TeacherDto extends Dto {
 				result.add(teacher);
 
 			}
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
+				} catch (SQLException ex) {
 					// TODO Auto-generated catch block
-					e.printStackTrace();
+					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
@@ -169,14 +172,14 @@ public class TeacherDto extends Dto {
 			teacher.setSubjectCollection(subjectCollection);
 
 			sentencia1.close();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
@@ -196,14 +199,14 @@ public class TeacherDto extends Dto {
 			sentencia1.executeUpdate();
 			sentencia1.close();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
@@ -219,15 +222,15 @@ public class TeacherDto extends Dto {
 			sentencia1.setInt(1, idTeacher);
 
 			sentencia1.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
+		} catch (SQLException ex) {
+			Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
+				} catch (SQLException ex) {
 
-					e.printStackTrace();
+					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
@@ -246,14 +249,14 @@ public class TeacherDto extends Dto {
 			sentencia1.setInt(2, idTeacher);
 
 			sentencia1.executeUpdate();
-		} catch (ClassNotFoundException | SQLException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException | SQLException ex) {
+			Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
 		} finally {
 			if (conexion != null)
 				try {
 					conexion.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
+				} catch (SQLException ex) {
+					Logger.getLogger(TeacherDto.class.getName()).log(Level.SEVERE, null, ex);
 				}
 		}
 
