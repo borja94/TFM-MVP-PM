@@ -1,7 +1,6 @@
 package tfm.mpv.pm.Models;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -13,16 +12,16 @@ import java.util.List;
  *
  * @author borja
  */
-public class SubjectDto {
+public class SubjectDto extends Dto{
 
+	public SubjectDto() {
+		super();
+	}
 	public ResultSet Insert(Subject subject) {
 		Connection conexion = null;
 		ResultSet aux = null;
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
-			conexion.setAutoCommit(false);
+			conexion = basicDataSource.getConnection();
 
 			String sql = "INSERT INTO SUBJECT (TITLE,COURSE) VALUES(?,?)";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -33,10 +32,8 @@ public class SubjectDto {
 			sentencia1.executeUpdate();
 			aux = sentencia1.getGeneratedKeys();
 
-			conexion.commit();
-
 			sentencia1.close();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			if (conexion != null)
@@ -55,9 +52,7 @@ public class SubjectDto {
 		List<Subject> result = new ArrayList<>();
 		Connection conexion = null;
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
+			conexion = basicDataSource.getConnection();
 
 			Statement sentencia = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = sentencia.executeQuery("SELECT * FROM SUBJECT ");
@@ -65,7 +60,7 @@ public class SubjectDto {
 			while (rs.next()) {
 				result.add(new Subject(rs.getInt("ID"), rs.getString("TITLE"), rs.getInt("COURSE")));
 			}
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			if (conexion != null)
@@ -83,9 +78,8 @@ public class SubjectDto {
 		Connection conexion = null;
 		Subject subject = null;
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
-
+			conexion = basicDataSource.getConnection();
+			
 			String sql = "SELECT * FROM SUBJECT WHERE ID = ?";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
 					ResultSet.CONCUR_UPDATABLE);
@@ -97,7 +91,7 @@ public class SubjectDto {
 				subject = new Subject(rs.getInt("ID"), rs.getString("TITLE"), rs.getInt("COURSE"));
 			}
 			sentencia1.close();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			if (conexion != null)
@@ -114,8 +108,7 @@ public class SubjectDto {
 		Connection conexion = null;
 
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
+			conexion = basicDataSource.getConnection();
 
 			String sql = "DELETE FROM  SUBJECT WHERE ID = ?";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -124,7 +117,7 @@ public class SubjectDto {
 
 			sentencia1.executeUpdate();
 			sentencia1.close();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			if (conexion != null)
@@ -140,9 +133,7 @@ public class SubjectDto {
 		Connection conexion = null;
 
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
+			conexion = basicDataSource.getConnection();
 
 			String sql = "UPDATE SUBJECT  SET TITLE = ?, COURSE = ? WHERE ID= ?";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -154,7 +145,7 @@ public class SubjectDto {
 			sentencia1.executeUpdate();
 
 			sentencia1.close();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			if (conexion != null)

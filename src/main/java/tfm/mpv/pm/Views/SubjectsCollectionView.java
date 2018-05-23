@@ -51,7 +51,7 @@ public class SubjectsCollectionView extends JPanel {
 			}
 		});
 
-		EditButton.setText("Modo edici�n");
+		EditButton.setText("Modo edición");
 		EditButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
 				EditButtonActionPerformed(evt);

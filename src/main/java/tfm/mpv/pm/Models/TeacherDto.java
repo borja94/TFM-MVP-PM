@@ -18,15 +18,18 @@ import java.util.List;
  *
  * @author borja
  */
-public class TeacherDto {
+public class TeacherDto extends Dto {
+
+	public TeacherDto() {
+		super();
+	}
 
 	public ResultSet Insert(Teacher teacher) {
 		Connection conexion = null;
 		ResultSet result = null;
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
 
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
+			conexion = basicDataSource.getConnection();
 
 			String sql = "INSERT INTO TEACHER (NAME,SURNAME) VALUES(?,?)";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -45,8 +48,7 @@ public class TeacherDto {
 			}
 
 			sentencia1.close();
-			conexion.close();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			if (conexion != null)
@@ -64,9 +66,8 @@ public class TeacherDto {
 		Connection conexion = null;
 
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
 
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
+			conexion = basicDataSource.getConnection();
 
 			String sql = "UPDATE TEACHER  SET NAME = ?, SURNAME = ? WHERE ID= ?";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -83,7 +84,7 @@ public class TeacherDto {
 			sentencia1.executeUpdate();
 
 			sentencia1.close();
-		} catch (ClassNotFoundException | SQLException ex) {
+		} catch (SQLException ex) {
 		} finally {
 			if (conexion != null)
 				try {
@@ -91,9 +92,7 @@ public class TeacherDto {
 				} catch (SQLException e) {
 					e.printStackTrace();
 				}
-
 		}
-
 	}
 
 	public List<Teacher> GetAll() {
@@ -102,9 +101,7 @@ public class TeacherDto {
 		Connection conexion = null;
 
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
+			conexion = basicDataSource.getConnection();
 
 			Statement sentencia = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			ResultSet rs = sentencia.executeQuery("SELECT * FROM TEACHER ");
@@ -128,7 +125,7 @@ public class TeacherDto {
 				result.add(teacher);
 
 			}
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			if (conexion != null)
@@ -147,8 +144,7 @@ public class TeacherDto {
 		Connection conexion = null;
 		Teacher teacher = null;
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
+			conexion = basicDataSource.getConnection();
 
 			String sql = "SELECT T.* , S.ID AS SUBJECT_ID , S.TITLE , S.COURSE FROM TEACHER T "
 					+ "LEFT JOIN TEACHER_SUBJECT TS " + "ON T.ID = TS.ID_TEACHER " + "LEFT JOIN SUBJECT S "
@@ -173,7 +169,7 @@ public class TeacherDto {
 			teacher.setSubjectCollection(subjectCollection);
 
 			sentencia1.close();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			if (conexion != null)
@@ -190,8 +186,7 @@ public class TeacherDto {
 	public void Remove(int id) {
 		Connection conexion = null;
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
+			conexion = basicDataSource.getConnection();
 
 			String sql = "DELETE FROM  TEACHER WHERE ID = ?";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,
@@ -201,7 +196,7 @@ public class TeacherDto {
 			sentencia1.executeUpdate();
 			sentencia1.close();
 
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			if (conexion != null)
@@ -218,14 +213,13 @@ public class TeacherDto {
 		Connection conexion = null;
 
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
+			conexion = basicDataSource.getConnection();
 			String sql = "DELETE FROM  TEACHER_SUBJECT WHERE ID_TEACHER = ?";
 			PreparedStatement sentencia1 = conexion.prepareStatement(sql);
 			sentencia1.setInt(1, idTeacher);
 
 			sentencia1.executeUpdate();
-		} catch (ClassNotFoundException | SQLException e) {
+		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {
 			if (conexion != null)
