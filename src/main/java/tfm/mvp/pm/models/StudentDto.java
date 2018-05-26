@@ -3,10 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tfm.mvp.pm.Models;
+package tfm.mvp.pm.models;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,74 +15,63 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author borja
- */
-public class TeacherDto extends Dto {
+public class StudentDto extends Dto {
 
-	public TeacherDto() {
-		super();
-	}
-
-	public int Insert(Teacher teacher) {
+	public ResultSet Insert(Student student) {
 		Connection conexion = null;
-		ResultSet result = null;
+		ResultSet resultSet = null;
 		PreparedStatement sentencia1 = null;
-		int id = -1;
 		try {
-
 			conexion = basicDataSource.getConnection();
 
-			String sql = "INSERT INTO TEACHER (NAME,SURNAME) VALUES(?,?)";
+			String sql = "INSERT INTO STUDENT (NAME,SURNAME) VALUES(?,?)";
 			sentencia1 = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
-			sentencia1.setString(1, teacher.getName());
-			sentencia1.setString(2, teacher.getSurname());
+			sentencia1.setString(1, student.getName());
+			sentencia1.setString(2, student.getSurname());
 
 			sentencia1.executeUpdate();
-			result = sentencia1.getGeneratedKeys();
-
-			if (result.next()) {
-				id = result.getInt(1);
+			resultSet = sentencia1.getGeneratedKeys();
+			int id = -1;
+			if (resultSet.next()) {
+				id = resultSet.getInt(1);
 			}
 
-			for (Subject subject : teacher.getSubjectCollection()) {
-				InsertSubjectTeacher(id, subject.getId());
+			for (Subject subject : student.getSubjectCollection()) {
+				InsertSubjectStudent(id, subject.getId());
 			}
 
+			sentencia1.close();
 		} catch (SQLException ex) {
 			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
-
 		} finally {
 
-			if (result != null)
-				CloseResultSet(result);
+			if (resultSet != null)
+				CloseResultSet(resultSet);
 			if (sentencia1 != null)
 				ClosePreparedStatement(sentencia1);
 			if (conexion != null)
 				CloseConnection(conexion);
 		}
 
-		return id;
+		return resultSet;
 	}
 
-	public void Update(Teacher teacher) {
+	public void Update(Student student) {
 		Connection conexion = null;
 		PreparedStatement sentencia1 = null;
 		try {
-
 			conexion = basicDataSource.getConnection();
 
-			String sql = "UPDATE TEACHER  SET NAME = ?, SURNAME = ? WHERE ID= ?";
+			String sql = "UPDATE STUDENT  SET NAME = ?, SURNAME = ? WHERE ID= ?";
 			sentencia1 = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE,
 					Statement.RETURN_GENERATED_KEYS);
-			sentencia1.setString(1, teacher.getName());
-			sentencia1.setString(2, teacher.getSurname());
-			sentencia1.setInt(3, teacher.getId());
+			sentencia1.setString(1, student.getName());
+			sentencia1.setString(2, student.getSurname());
+			sentencia1.setInt(3, student.getId());
 
-			RemoveAllTeacherSubjects(teacher.getId());
-			for (Subject subject : teacher.getSubjectCollection()) {
-				InsertSubjectTeacher(teacher.getId(), subject.getId());
+			RemoveAllStudentSubjects(student.getId());
+			for (Subject subject : student.getSubjectCollection()) {
+				InsertSubjectStudent(student.getId(), subject.getId());
 			}
 
 			sentencia1.executeUpdate();
@@ -92,6 +80,7 @@ public class TeacherDto extends Dto {
 		} catch (SQLException ex) {
 			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
 		} finally {
+
 			if (sentencia1 != null)
 				ClosePreparedStatement(sentencia1);
 			if (conexion != null)
@@ -99,33 +88,34 @@ public class TeacherDto extends Dto {
 		}
 	}
 
-	public List<Teacher> GetAll() {
+	public List<Student> GetAll() {
 
-		List<Teacher> result = new ArrayList<Teacher>();
+		List<Student> result = new ArrayList<>();
 		Connection conexion = null;
-		Statement sentencia = null;
 		ResultSet rs = null;
+		Statement sentencia = null;
 
 		try {
 			conexion = basicDataSource.getConnection();
 
 			sentencia = conexion.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
-			rs = sentencia.executeQuery("SELECT * FROM TEACHER ");
+			rs = sentencia.executeQuery("SELECT * FROM STUDENT ");
 
 			rs.afterLast();
 			while (rs.previous()) {
 
-				Teacher teacher = new Teacher(rs.getInt("ID"), rs.getString(2), rs.getString(3));
+				Student student = new Student(rs.getInt("ID"), rs.getString(2), rs.getString(3));
 				SubjectDto subjectDto = new SubjectDto();
-				teacher.setSubjectCollection(subjectDto.GetByTeacher(teacher.getId()));
-
-				result.add(teacher);
+				student.setSubjectCollection(subjectDto.GetByStudent(student.getId()));
+				result.add(student);
 
 			}
 		} catch (SQLException ex) {
 			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
-			if (rs != null)
+
+			if (result != null)
 				CloseResultSet(rs);
 			if (sentencia != null)
 				CloseStatement(sentencia);
@@ -136,25 +126,25 @@ public class TeacherDto extends Dto {
 		return result;
 	}
 
-	public Teacher Get(int id) {
+	public Student Get(int id) {
 		Connection conexion = null;
-		Teacher teacher = null;
+		Student student = null;
 		PreparedStatement sentencia1 = null;
 		ResultSet rs = null;
 		try {
 			conexion = basicDataSource.getConnection();
 
-			String sql = "SELECT T.* , S.ID AS SUBJECT_ID , S.TITLE , S.COURSE FROM TEACHER T "
-					+ "LEFT JOIN TEACHER_SUBJECT TS " + "ON T.ID = TS.ID_TEACHER " + "LEFT JOIN SUBJECT S "
-					+ "ON TS.ID_SUBJECT = S.ID " + " WHERE T.ID = ?";
+			String sql = "SELECT S.* , SUB.ID AS SUBJECT_ID , SUB.TITLE , SUB.COURSE " + "FROM STUDENT S "
+					+ "LEFT JOIN STUDENT_SUBJECT SS " + "ON S.ID = SS.ID_STUDENT " + "LEFT JOIN SUBJECT SUB "
+					+ "ON SS.ID_SUBJECT = SUB.ID " + " WHERE S.ID = ?";
 			sentencia1 = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE);
 			sentencia1.setInt(1, id);
 
 			rs = sentencia1.executeQuery();
-			teacher = new Teacher();
+			student = new Student();
 			List<Subject> subjectCollection = new ArrayList<>();
 			if (rs.next()) {
-				teacher = new Teacher(rs.getInt("ID"), rs.getString("NAME"), rs.getString("SURNAME"));
+				student = new Student(rs.getInt("ID"), rs.getString("NAME"), rs.getString("SURNAME"));
 
 				do {
 					if (rs.getString("TITLE") != null) {
@@ -163,12 +153,14 @@ public class TeacherDto extends Dto {
 					}
 				} while (rs.next());
 			}
-			teacher.setSubjectCollection(subjectCollection);
+			student.setSubjectCollection(subjectCollection);
 
 			sentencia1.close();
 		} catch (SQLException ex) {
 			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
+
 			if (rs != null)
 				CloseResultSet(rs);
 			if (sentencia1 != null)
@@ -176,8 +168,7 @@ public class TeacherDto extends Dto {
 			if (conexion != null)
 				CloseConnection(conexion);
 		}
-
-		return teacher;
+		return student;
 	}
 
 	public void Remove(int id) {
@@ -186,17 +177,17 @@ public class TeacherDto extends Dto {
 		try {
 			conexion = basicDataSource.getConnection();
 
-			String sql = "DELETE FROM  TEACHER WHERE ID = ?";
+			String sql = "DELETE FROM  STUDENT WHERE ID = ?";
 			sentencia1 = conexion.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE, ResultSet.CONCUR_UPDATABLE,
 					Statement.RETURN_GENERATED_KEYS);
 			sentencia1.setInt(1, id);
 
 			sentencia1.executeUpdate();
 			sentencia1.close();
-
 		} catch (SQLException ex) {
 			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
 		} finally {
+
 			if (sentencia1 != null)
 				ClosePreparedStatement(sentencia1);
 			if (conexion != null)
@@ -205,48 +196,48 @@ public class TeacherDto extends Dto {
 
 	}
 
-	public void RemoveAllTeacherSubjects(int idTeacher) {
+	public void RemoveAllStudentSubjects(int idStudent) {
 		Connection conexion = null;
 		PreparedStatement sentencia1 = null;
 		try {
 			conexion = basicDataSource.getConnection();
-			String sql = "DELETE FROM  TEACHER_SUBJECT WHERE ID_TEACHER = ?";
+			String sql = "DELETE FROM  STUDENT_SUBJECT WHERE ID_STUDENT = ?";
 			sentencia1 = conexion.prepareStatement(sql);
-			sentencia1.setInt(1, idTeacher);
+			sentencia1.setInt(1, idStudent);
 
 			sentencia1.executeUpdate();
 		} catch (SQLException ex) {
 			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (sentencia1 != null)
 				ClosePreparedStatement(sentencia1);
 			if (conexion != null)
 				CloseConnection(conexion);
 		}
-
 	}
 
-	public void InsertSubjectTeacher(int idTeacher, int idSubject) {
+	public void InsertSubjectStudent(int idStudent, int idSubject) {
 
 		Connection conexion = null;
 		PreparedStatement sentencia1 = null;
 		try {
-			Class.forName("org.apache.derby.jdbc.ClientDriver");
-			conexion = DriverManager.getConnection("jdbc:derby://localhost:1527/TFM", "APP", null);
-			String sql = "INSERT INTO TEACHER_SUBJECT (ID_SUBJECT,ID_TEACHER) VALUES(?,?)";
+			conexion = basicDataSource.getConnection();
+			String sql = "INSERT INTO STUDENT_SUBJECT (ID_SUBJECT,ID_STUDENT) VALUES(?,?)";
 			sentencia1 = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			sentencia1.setInt(1, idSubject);
-			sentencia1.setInt(2, idTeacher);
+			sentencia1.setInt(2, idStudent);
 
 			sentencia1.executeUpdate();
-		} catch (ClassNotFoundException | SQLException ex) {
+		} catch (SQLException ex) {
 			Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, null, ex);
+
 		} finally {
 			if (sentencia1 != null)
 				ClosePreparedStatement(sentencia1);
 			if (conexion != null)
 				CloseConnection(conexion);
-		}
 
+		}
 	}
 }

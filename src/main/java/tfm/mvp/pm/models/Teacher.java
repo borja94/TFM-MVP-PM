@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package tfm.mvp.pm.Models;
+package tfm.mvp.pm.models;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,13 +12,13 @@ import java.util.List;
  *
  * @author borja
  */
-public class Student {
+public class Teacher {
 
-    public Student() {
+    public Teacher() {
         subjectCollection = new ArrayList<>();
     }
 
-    public Student(int id, String name, String surname) {
+    public Teacher(int id, String name, String surname) {
         subjectCollection = new ArrayList<>();
         this.id = id;
         this.name = name;
@@ -30,6 +30,7 @@ public class Student {
     private String name;
 
     private String surname;
+
     private List<Subject> subjectCollection;
 
     public int getId() {
@@ -52,8 +53,8 @@ public class Student {
         return surname;
     }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
+    public void setSurname(String Surname) {
+        this.surname = Surname;
     }
 
     public List<Subject> getSubjectCollection() {
@@ -63,4 +64,15 @@ public class Student {
     public void setSubjectCollection(List<Subject> subjectCollection) {
         this.subjectCollection = subjectCollection;
     }
+    
+    public List<String> getSubjectCollectionString(){
+    	List<String> result = new ArrayList<>();
+    	
+    	for(Subject item : subjectCollection) {
+    		result.add(item.toString());
+    	}
+    	
+    	return result;
+    }
+
 }

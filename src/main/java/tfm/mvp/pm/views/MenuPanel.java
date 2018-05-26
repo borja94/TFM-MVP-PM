@@ -1,4 +1,4 @@
-package tfm.mvp.pm.Views;
+package tfm.mvp.pm.views;
 
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle;

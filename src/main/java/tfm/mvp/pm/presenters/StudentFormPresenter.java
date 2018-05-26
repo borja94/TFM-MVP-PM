@@ -1,13 +1,13 @@
-package tfm.mvp.pm.Presenters;
+package tfm.mvp.pm.presenters;
 
 import java.util.List;
 
 import javax.swing.DefaultListModel;
 
-import tfm.mvp.pm.Models.Student;
-import tfm.mvp.pm.Models.StudentDto;
-import tfm.mvp.pm.Models.Subject;
-import tfm.mvp.pm.Models.SubjectDto;
+import tfm.mvp.pm.models.Student;
+import tfm.mvp.pm.models.StudentDto;
+import tfm.mvp.pm.models.Subject;
+import tfm.mvp.pm.models.SubjectDto;
 
 public class StudentFormPresenter {
 

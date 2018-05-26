@@ -1,4 +1,4 @@
-package tfm.mvp.pm.Views;
+package tfm.mvp.pm.views;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,7 +8,7 @@ import javax.swing.GroupLayout;
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle;
 
-import tfm.mvp.pm.Presenters.TeacherFormPresenter;
+import tfm.mvp.pm.presenters.TeacherFormPresenter;
 
 public class TeacherFormView extends JPanel {
 
