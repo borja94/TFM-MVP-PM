@@ -1,8 +1,11 @@
 package tfm.mvp.pm.views;
 
 import javax.swing.GroupLayout;
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.LayoutStyle;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
@@ -11,14 +14,14 @@ import tfm.mvp.pm.presenters.TeachersCollectionPresenter;
 
 public class TeacherCollectionView extends JPanel {
 
-	private javax.swing.JButton DeleteTeacherButton;
-	private javax.swing.JButton EditTeacherButton;
-	private javax.swing.JButton NewTeacherButton;
-	private javax.swing.JTable TeachersTable;
-	private javax.swing.JScrollPane TableScrollPane;
+	private javax.swing.JButton deleteTeacherButton;
+	private javax.swing.JButton editTeacherButton;
+	private javax.swing.JButton newTeacherButton;
+	private javax.swing.JTable teachersTable;
+	private javax.swing.JScrollPane tableScrollPane;
 
 	private TeachersCollectionPresenter teacherCollectionPresenter;
-	private TableModel TeachersTableModel;
+	private TableModel teachersTableModel;
 	private TeacherFormView teacherFormView;
 
 	public TeacherCollectionView(TeacherFormView teacherFormView) {
@@ -29,34 +32,34 @@ public class TeacherCollectionView extends JPanel {
 
 	private void initComponents() {
 
-		TableScrollPane = new javax.swing.JScrollPane();
-		TeachersTable = new javax.swing.JTable();
-		DeleteTeacherButton = new javax.swing.JButton();
-		EditTeacherButton = new javax.swing.JButton();
-		NewTeacherButton = new javax.swing.JButton();
+		tableScrollPane = new JScrollPane();
+		teachersTable = new JTable();
+		deleteTeacherButton = new JButton();
+		editTeacherButton = new JButton();
+		newTeacherButton = new JButton();
 
-		UpdateTeacherTableData();
+		updateTeacherTableData();
 
-		TableScrollPane.setViewportView(TeachersTable);
+		tableScrollPane.setViewportView(teachersTable);
 
-		DeleteTeacherButton.setText("Borrar");
-		DeleteTeacherButton.addActionListener(new java.awt.event.ActionListener() {
+		deleteTeacherButton.setText("Borrar");
+		deleteTeacherButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				DeleteTeacherButtonActionPerformed(evt);
+				deleteTeacherButtonActionPerformed();
 			}
 		});
 
-		EditTeacherButton.setText("Modo edici�n");
-		EditTeacherButton.addActionListener(new java.awt.event.ActionListener() {
+		editTeacherButton.setText("Modo edición");
+		editTeacherButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				EditTeacherButtonActionPerformed(evt);
+				editTeacherButtonActionPerformed();
 			}
 		});
 
-		NewTeacherButton.setText("Nuevo profesor");
-		NewTeacherButton.addActionListener(new java.awt.event.ActionListener() {
+		newTeacherButton.setText("Nuevo profesor");
+		newTeacherButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				NewTeacherButtonActionPerformed(evt);
+				newTeacherButtonActionPerformed();
 			}
 		});
 
@@ -70,23 +73,23 @@ public class TeacherCollectionView extends JPanel {
 		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 				.addGroup(layout.createSequentialGroup().addGroup(layout
 						.createParallelGroup(GroupLayout.Alignment.LEADING)
-						.addComponent(TableScrollPane, GroupLayout.PREFERRED_SIZE, 425, GroupLayout.PREFERRED_SIZE)
-						.addGroup(layout.createSequentialGroup().addComponent(DeleteTeacherButton)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addComponent(EditTeacherButton)
+						.addComponent(tableScrollPane, GroupLayout.PREFERRED_SIZE, 425, GroupLayout.PREFERRED_SIZE)
+						.addGroup(layout.createSequentialGroup().addComponent(deleteTeacherButton)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addComponent(editTeacherButton)
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
-								.addComponent(NewTeacherButton)))
+								.addComponent(newTeacherButton)))
 						.addGap(0, 19, Short.MAX_VALUE)));
 		layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(
 				GroupLayout.Alignment.TRAILING,
 				layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-						.addComponent(TableScrollPane, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
+						.addComponent(tableScrollPane, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
 						.addGap(18, 18, 18)
 						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-								.addComponent(DeleteTeacherButton).addComponent(EditTeacherButton).addComponent(NewTeacherButton))
+								.addComponent(deleteTeacherButton).addComponent(editTeacherButton).addComponent(newTeacherButton))
 						.addGap(203, 203, 203)));
 	}
 
-	public void UpdateTeacherTableData() {
+	public void updateTeacherTableData() {
 
 		teacherCollectionPresenter.loadTableData();
 		String[] columns = new String[teacherCollectionPresenter.getNumColumns()];
@@ -100,30 +103,30 @@ public class TeacherCollectionView extends JPanel {
 				tableData[i][j] = teacherCollectionPresenter.getTeacherAtribute(j, i);
 			}
 		}
-		TeachersTableModel = new DefaultTableModel(tableData, columns);
-		TeachersTable.setModel(TeachersTableModel);
+		teachersTableModel = new DefaultTableModel(tableData, columns);
+		teachersTable.setModel(teachersTableModel);
 
 	}
 
-	private void DeleteTeacherButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		int selectedRow = TeachersTable.getSelectedRow();
+	private void deleteTeacherButtonActionPerformed() {
+		int selectedRow = teachersTable.getSelectedRow();
 		if (selectedRow != -1) {
 			int dialogResult = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar al profesor");
 			if (dialogResult == JOptionPane.YES_OPTION) {
-				teacherCollectionPresenter.RemoveTeacher(((int) TeachersTableModel.getValueAt(selectedRow, 0)));
-				UpdateTeacherTableData();
+				teacherCollectionPresenter.removeTeacher(((int) teachersTableModel.getValueAt(selectedRow, 0)));
+				updateTeacherTableData();
 			}
 		}
 	}
 
-	private void EditTeacherButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		int selectedRow = TeachersTable.getSelectedRow();
+	private void editTeacherButtonActionPerformed() {
+		int selectedRow = teachersTable.getSelectedRow();
 		if (selectedRow != -1)
-			teacherFormView.EditTeacherMode(Integer.parseInt(TeachersTableModel.getValueAt(selectedRow, 0).toString()));
+			teacherFormView.editTeacherMode(Integer.parseInt(teachersTableModel.getValueAt(selectedRow, 0).toString()));
 	}
 
-	private void NewTeacherButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		teacherFormView.NewTeacherMode();
+	private void newTeacherButtonActionPerformed() {
+		teacherFormView.newTeacherMode();
 	}
 
 }

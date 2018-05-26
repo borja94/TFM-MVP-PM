@@ -5,17 +5,21 @@
  */
 package tfm.mvp.pm.views;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JFrame;
+
 /**
  *
  * @author borja
  */
-public class MenuFrame extends javax.swing.JFrame {
+public class MenuFrame extends JFrame {
 
 	private SubjectsFrame subjectsFrame;
 	private TeachersFrame teacherFrame;
 	private StudentsFrame studentsFrame;
 
-	
 	public MenuFrame() {
 		MenuPanel menuPanel = new MenuPanel();
 		this.setContentPane(menuPanel);
@@ -24,20 +28,20 @@ public class MenuFrame extends javax.swing.JFrame {
 		teacherFrame = new TeachersFrame(this);
 		studentsFrame = new StudentsFrame(this);
 
-		menuPanel.getStudentFrameButton().addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				studentFrameButtonAction(evt);
+		menuPanel.getStudentFrameButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				studentFrameButtonAction();
 			}
 		});
 
-		menuPanel.getTeacherFrameButton().addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				teacherFrameButtonAction(evt);
+		menuPanel.getTeacherFrameButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				teacherFrameButtonAction();
 			}
 		});
-		menuPanel.getSubjectFrameButton().addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				subjectFrameButtonAction(evt);
+		menuPanel.getSubjectFrameButton().addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				subjectFrameButtonAction();
 			}
 		});
 
@@ -48,21 +52,21 @@ public class MenuFrame extends javax.swing.JFrame {
 		this.setSize(500, 500);
 	}
 
-	private void teacherFrameButtonAction(java.awt.event.ActionEvent evt) {
+	private void teacherFrameButtonAction() {
 
 		this.setVisible(false);
 		teacherFrame.setVisible(true);
 		dispose();
 	}
 
-	private void studentFrameButtonAction(java.awt.event.ActionEvent evt) {
+	private void studentFrameButtonAction() {
 
 		this.setVisible(false);
 		studentsFrame.setVisible(true);
 		dispose();
 	}
 
-	private void subjectFrameButtonAction(java.awt.event.ActionEvent evt) {
+	private void subjectFrameButtonAction() {
 
 		this.setVisible(false);
 		subjectsFrame.setVisible(true);

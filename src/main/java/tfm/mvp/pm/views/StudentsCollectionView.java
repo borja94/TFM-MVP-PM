@@ -13,12 +13,12 @@ import tfm.mvp.pm.presenters.StudentsCollectionPresenter;
 
 public class StudentsCollectionView extends JPanel {
 
-	private TableModel StudentsTableModel;
+	private TableModel studentsTableModel;
 
-	private JButton DeleteStudentButton;
-	private JButton EditStudentButton;
-	private JButton NewStudentButton;
-	private JTable StudentsTable;
+	private JButton deleteStudentButton;
+	private JButton editStudentButton;
+	private JButton newStudentButton;
+	private JTable studentsTable;
 	private JScrollPane jScrollPane1;
 	private StudentFormView studentFormView;
 	private StudentsCollectionPresenter studentCollectionPresenter;
@@ -32,33 +32,33 @@ public class StudentsCollectionView extends JPanel {
 	private void initComponents() {
 
 		jScrollPane1 = new JScrollPane();
-		StudentsTable = new JTable();
-		DeleteStudentButton = new JButton();
-		EditStudentButton = new JButton();
-		NewStudentButton = new JButton();
+		studentsTable = new JTable();
+		deleteStudentButton = new JButton();
+		editStudentButton = new JButton();
+		newStudentButton = new JButton();
 
-		UpdateStudentTableData();
+		updateStudentTableData();
 
-		jScrollPane1.setViewportView(StudentsTable);
+		jScrollPane1.setViewportView(studentsTable);
 
-		DeleteStudentButton.setText("Borrar");
-		DeleteStudentButton.addActionListener(new java.awt.event.ActionListener() {
+		deleteStudentButton.setText("Borrar");
+		deleteStudentButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				DeleteStudentButtonActionPerformed(evt);
+				deleteStudentButtonActionPerformed();
 			}
 		});
 
-		EditStudentButton.setText("Modo edici�n");
-		EditStudentButton.addActionListener(new java.awt.event.ActionListener() {
+		editStudentButton.setText("Modo edici�n");
+		editStudentButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				EditStudentButtonActionPerformed(evt);
+				editStudentButtonActionPerformed();
 			}
 		});
 
-		NewStudentButton.setText("Nuevo alumno");
-		NewStudentButton.addActionListener(new java.awt.event.ActionListener() {
+		newStudentButton.setText("Nuevo alumno");
+		newStudentButton.addActionListener(new java.awt.event.ActionListener() {
 			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				NewStudentButtonActionPerformed(evt);
+				newStudentButtonActionPerformed();
 			}
 		});
 
@@ -73,22 +73,22 @@ public class StudentsCollectionView extends JPanel {
 				.addGroup(jPanel2Layout.createSequentialGroup().addContainerGap()
 						.addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 								.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 384, GroupLayout.PREFERRED_SIZE)
-								.addGroup(jPanel2Layout.createSequentialGroup().addComponent(DeleteStudentButton)
-										.addGap(18, 18, 18).addComponent(EditStudentButton).addGap(18, 18, 18)
-										.addComponent(NewStudentButton)))
+								.addGroup(jPanel2Layout.createSequentialGroup().addComponent(deleteStudentButton)
+										.addGap(18, 18, 18).addComponent(editStudentButton).addGap(18, 18, 18)
+										.addComponent(newStudentButton)))
 						.addContainerGap(17, Short.MAX_VALUE)));
 		jPanel2Layout.setVerticalGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 				.addGroup(jPanel2Layout.createSequentialGroup().addContainerGap()
 						.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 176, GroupLayout.PREFERRED_SIZE)
 						.addGap(18, 18, 18)
 						.addGroup(jPanel2Layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-								.addComponent(DeleteStudentButton).addComponent(EditStudentButton)
-								.addComponent(NewStudentButton))
+								.addComponent(deleteStudentButton).addComponent(editStudentButton)
+								.addComponent(newStudentButton))
 						.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)));
 
 	}
 
-	public void UpdateStudentTableData() {
+	public void updateStudentTableData() {
 		studentCollectionPresenter.loadTableData();
 		String[] columns = new String[studentCollectionPresenter.getNumColumns()];
 		String[][] tableData = new String[studentCollectionPresenter.getNumRows()][studentCollectionPresenter
@@ -101,32 +101,32 @@ public class StudentsCollectionView extends JPanel {
 				tableData[i][j] = studentCollectionPresenter.getStudentAtribute(j, i);
 			}
 		}
-		StudentsTableModel = new DefaultTableModel(tableData, columns);
-		StudentsTable.setModel(StudentsTableModel);
+		studentsTableModel = new DefaultTableModel(tableData, columns);
+		studentsTable.setModel(studentsTableModel);
 	}
 
-	private void DeleteStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		int selectedRow = StudentsTable.getSelectedRow();
+	private void deleteStudentButtonActionPerformed() {
+		int selectedRow = studentsTable.getSelectedRow();
 		if (selectedRow != -1) {
 			int dialogResult = JOptionPane.showConfirmDialog(null, "Estas seguro de eliminar al alumno");
 			if (dialogResult == JOptionPane.YES_OPTION) {
-				studentCollectionPresenter.RemoveStudent((Integer.parseInt(StudentsTableModel.getValueAt(selectedRow, 0).toString())));
-				UpdateStudentTableData();
+				studentCollectionPresenter.removeStudent((Integer.parseInt(studentsTableModel.getValueAt(selectedRow, 0).toString())));
+				updateStudentTableData();
 			}
 		}
 	}
 
-	private void EditStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {
+	private void editStudentButtonActionPerformed() {
 
-		int selectedRow = StudentsTable.getSelectedRow();
+		int selectedRow = studentsTable.getSelectedRow();
 		if (selectedRow != -1) {
-			studentFormView.EditTeacherMode(Integer.parseInt(StudentsTableModel.getValueAt(selectedRow, 0).toString()));
+			studentFormView.editTeacherMode(Integer.parseInt(studentsTableModel.getValueAt(selectedRow, 0).toString()));
 
 		}
 	}
 
-	private void NewStudentButtonActionPerformed(java.awt.event.ActionEvent evt) {
-		studentFormView.NewTeacherMode();
+	private void newStudentButtonActionPerformed() {
+		studentFormView.newTeacherMode();
 	}
 
 }

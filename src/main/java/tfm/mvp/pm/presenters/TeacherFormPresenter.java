@@ -15,41 +15,42 @@ public class TeacherFormPresenter {
 	private SubjectDto subjectDto;
 	private Teacher teacher;
 	private List<Subject> subjectsCollection;
+	private static final char ID_SUBJECT_SEPARATOR='#';
 
 	public TeacherFormPresenter() {
 		teacherDto = new TeacherDto();
 		subjectDto = new SubjectDto();
 	}
 
-	public void InsertNewTeacher(String name, String surname, DefaultListModel<String> assignedSubjectModel) {
+	public void insertNewTeacher(String name, String surname, DefaultListModel<String> assignedSubjectModel) {
 
-		Teacher teacher = new Teacher(0, name, surname);
+		Teacher teacherAux = new Teacher(0, name, surname);
 
 		for (int i = 0; i < assignedSubjectModel.size(); i++) {
-			String subjectAux = (String) assignedSubjectModel.getElementAt(i);
-			int aux = Integer.parseInt(subjectAux.substring(0, subjectAux.indexOf("#")));
-			teacher.getSubjectCollection().add(new Subject(aux));
+			String subjectAux = assignedSubjectModel.getElementAt(i);
+			int aux = Integer.parseInt(subjectAux.substring(0, subjectAux.indexOf(ID_SUBJECT_SEPARATOR)));
+			teacherAux.getSubjectCollection().add(new Subject(aux));
 		}
-		teacherDto.Insert(teacher);
+		teacherDto.insert(teacherAux);
 
 	}
 
-	public void UpdateTeacher(String name, String surname, DefaultListModel<String> assignedSubjectModel, int id) {
+	public void updateTeacher(String name, String surname, DefaultListModel<String> assignedSubjectModel, int id) {
 
-		Teacher teacher = new Teacher(id, name, surname);
+		Teacher teacherAux = new Teacher(id, name, surname);
 
 		for (int i = 0; i < assignedSubjectModel.size(); i++) {
-			String subjectAux = (String) assignedSubjectModel.getElementAt(i);
-			int aux = Integer.parseInt(subjectAux.substring(0, subjectAux.indexOf("#")));
-			teacher.getSubjectCollection().add(new Subject(aux));
+			String subjectAux =  assignedSubjectModel.getElementAt(i);
+			int aux = Integer.parseInt(subjectAux.substring(0, subjectAux.indexOf(ID_SUBJECT_SEPARATOR)));
+			teacherAux.getSubjectCollection().add(new Subject(aux));
 		}
 
-		teacherDto.Update(teacher);
+		teacherDto.update(teacherAux);
 
 	}
 
 	public void loadTeacher(int id) {
-		teacher = teacherDto.Get(id);
+		teacher = teacherDto.get(id);
 	}
 
 	public String getTeacherName() {
@@ -73,7 +74,7 @@ public class TeacherFormPresenter {
 	}
 
 	public int loadSubjects() {
-		subjectsCollection = subjectDto.GetAll();
+		subjectsCollection = subjectDto.getAll();
 		return subjectsCollection.size();
 	}
 
