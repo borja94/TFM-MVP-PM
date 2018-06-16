@@ -14,7 +14,7 @@ import javax.swing.LayoutStyle;
 
 import tfm.mvp.pm.presenters.StudentFormPresenter;
 
-public class StudentFormView extends JPanel {
+public class StudentFormView extends JPanel implements IStudentFormView {
 
 	private JButton addSubjectButton;
 	private JList<String> assignSubjectCollection;

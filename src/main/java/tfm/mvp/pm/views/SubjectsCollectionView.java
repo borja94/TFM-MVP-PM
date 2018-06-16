@@ -25,16 +25,19 @@ public class SubjectsCollectionView extends JPanel {
 	private JTable subjectTable;
 	private JScrollPane tableScrollPane;
 
-	private SubjectFormView subjectFormView;
+	private ISubjectFormView iSubjectFormView;
 	private SubjectsCollectionPresenter subjectsCollectionPresenter;
 
-	public SubjectsCollectionView(SubjectFormView subjectFormView) {
+	public SubjectsCollectionView() {
 
 		subjectsCollectionPresenter = new SubjectsCollectionPresenter();
-		this.subjectFormView = subjectFormView;
 		initComponents();
 		updateSubjectsTableData();
 
+	}
+
+	public void setSubjectFormView(ISubjectFormView subjectFormView) {
+		iSubjectFormView = subjectFormView;
 	}
 
 	private void initComponents() {
@@ -75,21 +78,20 @@ public class SubjectsCollectionView extends JPanel {
 
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup().addGroup(layout
-						.createParallelGroup(GroupLayout.Alignment.LEADING)
+		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout
+				.createSequentialGroup()
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 						.addComponent(tableScrollPane, GroupLayout.PREFERRED_SIZE, 425, GroupLayout.PREFERRED_SIZE)
 						.addGroup(layout.createSequentialGroup().addComponent(deleteButton)
 								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addComponent(editButton)
 								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(newSubjectButton)))
-						.addGap(0, 19, Short.MAX_VALUE)));
+				.addGap(0, 19, Short.MAX_VALUE)));
 		layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(
 				GroupLayout.Alignment.TRAILING,
 				layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(tableScrollPane, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
-						.addGap(18, 18, 18)
-						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
+						.addGap(18, 18, 18).addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
 								.addComponent(deleteButton).addComponent(editButton).addComponent(newSubjectButton))
 						.addGap(203, 203, 203)));
 
@@ -128,11 +130,12 @@ public class SubjectsCollectionView extends JPanel {
 
 		int selectedRow = subjectTable.getSelectedRow();
 		if (selectedRow != -1)
-			subjectFormView.editSubjectMode(Integer.parseInt(subjectsTableModel.getValueAt(selectedRow, 0).toString()));
+			iSubjectFormView
+					.editSubjectMode(Integer.parseInt(subjectsTableModel.getValueAt(selectedRow, 0).toString()));
 	}
 
 	private void newSubjectButtonActionPerformed() {
-		subjectFormView.newSubjectMode();
+		iSubjectFormView.newSubjectMode();
 	}
 
 }

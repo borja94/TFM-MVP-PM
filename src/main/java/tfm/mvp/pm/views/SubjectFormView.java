@@ -11,7 +11,7 @@ import javax.swing.LayoutStyle;
 
 import tfm.mvp.pm.presenters.SubjectFormPresenter;
 
-public class SubjectFormView extends JPanel {
+public class SubjectFormView extends JPanel implements ISubjectFormView {
 
 	private static final String NEW_SUBJECT_LABEL_TEXT = "Nueva asignatura";
 	private static final String EDIT_SUBJECT_LABEL_TEXT = "Editar asignatura";

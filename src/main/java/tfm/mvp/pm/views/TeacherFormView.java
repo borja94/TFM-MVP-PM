@@ -17,7 +17,7 @@ import javax.swing.LayoutStyle;
 
 import tfm.mvp.pm.presenters.TeacherFormPresenter;
 
-public class TeacherFormView extends JPanel {
+public class TeacherFormView extends JPanel implements ITeacherFormView{
 
 	private TeacherFormPresenter teacherFormPresenter;
 

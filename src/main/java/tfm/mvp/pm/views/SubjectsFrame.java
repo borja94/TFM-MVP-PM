@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tfm.mvp.pm.views;
 
 import java.awt.event.ActionEvent;
@@ -14,26 +9,21 @@ import javax.swing.JFrame;
 import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 
-/**
- *
- * @author borja
- */
+
 public class SubjectsFrame extends JFrame {
 
 	private MenuFrame menuFrame;
 	private SubjectFormView subjectFormView;
 	private SubjectsCollectionView subjectCollectionView;
 
-	/**
-	 * Creates new form SubjectsFrame
-	 *
-	 * @param menuFrame
-	 */
+	
 	public SubjectsFrame(MenuFrame menuFrame) {
 
 		subjectFormView = new SubjectFormView();
-		subjectCollectionView = new SubjectsCollectionView(subjectFormView);
+		subjectCollectionView = new SubjectsCollectionView();
+		
 		subjectFormView.setSubjectCollectionView(subjectCollectionView);
+		subjectCollectionView.setSubjectFormView(subjectFormView);
 
 		initComponents();
 		this.menuFrame = menuFrame;

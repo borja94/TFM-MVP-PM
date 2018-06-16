@@ -22,12 +22,34 @@ public class TeacherCollectionView extends JPanel {
 
 	private TeachersCollectionPresenter teacherCollectionPresenter;
 	private TableModel teachersTableModel;
-	private TeacherFormView teacherFormView;
+	private ITeacherFormView iTeacherFormView;
 
-	public TeacherCollectionView(TeacherFormView teacherFormView) {
+	public TeacherCollectionView() {
 		teacherCollectionPresenter = new TeachersCollectionPresenter();
-		this.teacherFormView = teacherFormView;
 		initComponents();
+	}
+
+	public void updateTeacherTableData() {
+
+		teacherCollectionPresenter.loadTableData();
+		String[] columns = new String[teacherCollectionPresenter.getNumColumns()];
+		String[][] tableData = new String[teacherCollectionPresenter.getNumRows()][teacherCollectionPresenter
+				.getNumColumns()];
+		for (int i = 0; i < columns.length; i++) {
+			columns[i] = teacherCollectionPresenter.getColumnName(i);
+		}
+		for (int i = 0; i < teacherCollectionPresenter.getNumRows(); i++) {
+			for (int j = 0; j < teacherCollectionPresenter.getNumColumns(); j++) {
+				tableData[i][j] = teacherCollectionPresenter.getTeacherAtribute(j, i);
+			}
+		}
+		teachersTableModel = new DefaultTableModel(tableData, columns);
+		teachersTable.setModel(teachersTableModel);
+
+	}
+
+	public void setTeacherFormView(ITeacherFormView teacherFormView) {
+		iTeacherFormView = teacherFormView;
 	}
 
 	private void initComponents() {
@@ -70,42 +92,24 @@ public class TeacherCollectionView extends JPanel {
 
 		GroupLayout layout = new GroupLayout(this);
 		this.setLayout(layout);
-		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
-				.addGroup(layout.createSequentialGroup().addGroup(layout
-						.createParallelGroup(GroupLayout.Alignment.LEADING)
+		layout.setHorizontalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(layout
+				.createSequentialGroup()
+				.addGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING)
 						.addComponent(tableScrollPane, GroupLayout.PREFERRED_SIZE, 425, GroupLayout.PREFERRED_SIZE)
 						.addGroup(layout.createSequentialGroup().addComponent(deleteTeacherButton)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED).addComponent(editTeacherButton)
-								.addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
+								.addPreferredGap(LayoutStyle.ComponentPlacement.UNRELATED)
+								.addComponent(editTeacherButton).addPreferredGap(LayoutStyle.ComponentPlacement.RELATED)
 								.addComponent(newTeacherButton)))
-						.addGap(0, 19, Short.MAX_VALUE)));
+				.addGap(0, 19, Short.MAX_VALUE)));
 		layout.setVerticalGroup(layout.createParallelGroup(GroupLayout.Alignment.LEADING).addGroup(
 				GroupLayout.Alignment.TRAILING,
 				layout.createSequentialGroup().addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
 						.addComponent(tableScrollPane, GroupLayout.PREFERRED_SIZE, 185, GroupLayout.PREFERRED_SIZE)
 						.addGap(18, 18, 18)
 						.addGroup(layout.createParallelGroup(GroupLayout.Alignment.BASELINE)
-								.addComponent(deleteTeacherButton).addComponent(editTeacherButton).addComponent(newTeacherButton))
+								.addComponent(deleteTeacherButton).addComponent(editTeacherButton)
+								.addComponent(newTeacherButton))
 						.addGap(203, 203, 203)));
-	}
-
-	public void updateTeacherTableData() {
-
-		teacherCollectionPresenter.loadTableData();
-		String[] columns = new String[teacherCollectionPresenter.getNumColumns()];
-		String[][] tableData = new String[teacherCollectionPresenter.getNumRows()][teacherCollectionPresenter
-				.getNumColumns()];
-		for (int i = 0; i < columns.length; i++) {
-			columns[i] = teacherCollectionPresenter.getColumnName(i);
-		}
-		for (int i = 0; i < teacherCollectionPresenter.getNumRows(); i++) {
-			for (int j = 0; j < teacherCollectionPresenter.getNumColumns(); j++) {
-				tableData[i][j] = teacherCollectionPresenter.getTeacherAtribute(j, i);
-			}
-		}
-		teachersTableModel = new DefaultTableModel(tableData, columns);
-		teachersTable.setModel(teachersTableModel);
-
 	}
 
 	private void deleteTeacherButtonActionPerformed() {
@@ -122,11 +126,12 @@ public class TeacherCollectionView extends JPanel {
 	private void editTeacherButtonActionPerformed() {
 		int selectedRow = teachersTable.getSelectedRow();
 		if (selectedRow != -1)
-			teacherFormView.editTeacherMode(Integer.parseInt(teachersTableModel.getValueAt(selectedRow, 0).toString()));
+			iTeacherFormView
+					.editTeacherMode(Integer.parseInt(teachersTableModel.getValueAt(selectedRow, 0).toString()));
 	}
 
 	private void newTeacherButtonActionPerformed() {
-		teacherFormView.newTeacherMode();
+		iTeacherFormView.newTeacherMode();
 	}
 
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tfm.mvp.pm.views;
 
 
@@ -13,10 +8,7 @@ import javax.swing.GroupLayout;
 import javax.swing.WindowConstants;
 import javax.swing.JButton;
 
-/**
- *
- * @author borja
- */
+
 public class StudentsFrame extends javax.swing.JFrame {
 
 	private MenuFrame menuFrame;
@@ -25,16 +17,13 @@ public class StudentsFrame extends javax.swing.JFrame {
 	private StudentsCollectionView studentsCollectionView;
 
 	
-
-	/**
-	 * Creates new form StudentsFrame
-	 *
-	 * @param menuFrame
-	 */
 	public StudentsFrame(MenuFrame menuFrame) {
 		studentFormView = new StudentFormView();
-		studentsCollectionView = new StudentsCollectionView(studentFormView);
+		studentsCollectionView = new StudentsCollectionView();
+		
 		studentFormView.setStudentCollectionView(studentsCollectionView);
+		studentsCollectionView.setStudentFormView(studentFormView);
+		
 		initComponents();
 		this.menuFrame = menuFrame;
 	}

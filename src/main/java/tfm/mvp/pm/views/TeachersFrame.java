@@ -11,26 +11,23 @@ import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 import javax.swing.JButton;
 
-/**
- *
- * @author borja
- */
+
 public class TeachersFrame extends JFrame {
 
 	private MenuFrame menuFrame;
 	private TeacherFormView teacherFormView;
 	private TeacherCollectionView teacherCollectionView;
 
-	/**
-	 * Creates new form TeachersFrame
-	 * 
-	 * @param menuFrame
-	 */
+	
 	public TeachersFrame(MenuFrame menuFrame) {
 		this.menuFrame = menuFrame;
+		
 		teacherFormView = new TeacherFormView();
-		teacherCollectionView = new TeacherCollectionView(teacherFormView);
+		teacherCollectionView = new TeacherCollectionView();
+		
 		teacherFormView.setTeacherCollectionView(teacherCollectionView);
+		teacherCollectionView.setTeacherFormView(teacherFormView);
+		
 		initComponents();
 	}
 
