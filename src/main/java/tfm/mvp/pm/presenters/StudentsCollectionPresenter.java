@@ -3,21 +3,21 @@ package tfm.mvp.pm.presenters;
 import java.util.List;
 
 import tfm.mvp.pm.models.Student;
-import tfm.mvp.pm.models.StudentDto;
+import tfm.mvp.pm.models.StudentDao;
 import tfm.mvp.pm.models.Subject;
 
 public class StudentsCollectionPresenter {
 
-	private StudentDto studentDto;
+	private StudentDao studentDao;
 	private List<Student> studentCollection;
 	private static final String[] COLUMN_NAMES = { "ID", "Nombre", "Apellidos", "Asignaturas" };
 
 	public StudentsCollectionPresenter() {
-		studentDto = new StudentDto();
+		studentDao = new StudentDao();
 	}
 
 	public void loadTableData() {
-		studentCollection = studentDto.getAll();
+		studentCollection = studentDao.getAll();
 	}
 
 	public int getNumColumns() {
@@ -56,7 +56,7 @@ public class StudentsCollectionPresenter {
 	}
 
 	public void removeStudent(int id) {
-			studentDto.remove(id);
+			studentDao.remove(id);
 	}
 
 }

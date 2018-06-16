@@ -4,20 +4,20 @@ import java.util.List;
 
 import tfm.mvp.pm.models.Subject;
 import tfm.mvp.pm.models.Teacher;
-import tfm.mvp.pm.models.TeacherDto;
+import tfm.mvp.pm.models.TeacherDao;
 
 public class TeachersCollectionPresenter {
 
-	private TeacherDto teacherDto;
+	private TeacherDao teacherDao;
 	private List<Teacher> teacherCollection;
 	private static final String[] COLUMN_NAMES = { "ID", "Nombre", "Apellidos", "Asignaturas" };
 
 	public TeachersCollectionPresenter() {
-		teacherDto = new TeacherDto();
+		teacherDao = new TeacherDao();
 	}
 
 	public void loadTableData() {
-		teacherCollection = teacherDto.getAll();
+		teacherCollection = teacherDao.getAll();
 	}
 
 	public int getNumColumns() {
@@ -56,7 +56,7 @@ public class TeachersCollectionPresenter {
 	}
 
 	public void removeTeacher(int id) {
-		teacherDto.remove(id);
+		teacherDao.remove(id);
 	}
 
 }

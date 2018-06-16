@@ -3,20 +3,20 @@ package tfm.mvp.pm.presenters;
 import java.util.List;
 
 import tfm.mvp.pm.models.Subject;
-import tfm.mvp.pm.models.SubjectDto;
+import tfm.mvp.pm.models.SubjectDao;
 
 public class SubjectsCollectionPresenter {
 
-	private SubjectDto subjectDto;
+	private SubjectDao subjectDao;
 	private List<Subject> subjectsCollection;
 	private static final String[] COLUMN_NAMES = { "ID", "Titulo", "Curso" };
 
 	public SubjectsCollectionPresenter() {
-		subjectDto = new SubjectDto();
+		subjectDao = new SubjectDao();
 	}
 
 	public void loadTableData() {
-		subjectsCollection = subjectDto.getAll();
+		subjectsCollection = subjectDao.getAll();
 
 	}
 
@@ -47,7 +47,7 @@ public class SubjectsCollectionPresenter {
 	}
 
 	public void removeSubject(int id) {
-		subjectDto.remove(id);
+		subjectDao.remove(id);
 	}
 
 }

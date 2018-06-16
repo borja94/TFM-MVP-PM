@@ -5,21 +5,21 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 
 import tfm.mvp.pm.models.Subject;
-import tfm.mvp.pm.models.SubjectDto;
+import tfm.mvp.pm.models.SubjectDao;
 import tfm.mvp.pm.models.Teacher;
-import tfm.mvp.pm.models.TeacherDto;
+import tfm.mvp.pm.models.TeacherDao;
 
 public class TeacherFormPresenter {
 
-	private TeacherDto teacherDto;
-	private SubjectDto subjectDto;
+	private TeacherDao teacherDao;
+	private SubjectDao subjectDao;
 	private Teacher teacher;
 	private List<Subject> subjectsCollection;
 	private static final char ID_SUBJECT_SEPARATOR='#';
 
 	public TeacherFormPresenter() {
-		teacherDto = new TeacherDto();
-		subjectDto = new SubjectDto();
+		teacherDao = new TeacherDao();
+		subjectDao = new SubjectDao();
 	}
 
 	public void insertNewTeacher(String name, String surname, DefaultListModel<String> assignedSubjectModel) {
@@ -31,7 +31,7 @@ public class TeacherFormPresenter {
 			int aux = Integer.parseInt(subjectAux.substring(0, subjectAux.indexOf(ID_SUBJECT_SEPARATOR)));
 			teacherAux.getSubjectCollection().add(new Subject(aux));
 		}
-		teacherDto.insert(teacherAux);
+		teacherDao.insert(teacherAux);
 
 	}
 
@@ -45,12 +45,12 @@ public class TeacherFormPresenter {
 			teacherAux.getSubjectCollection().add(new Subject(aux));
 		}
 
-		teacherDto.update(teacherAux);
+		teacherDao.update(teacherAux);
 
 	}
 
 	public void loadTeacher(int id) {
-		teacher = teacherDto.get(id);
+		teacher = teacherDao.get(id);
 	}
 
 	public String getTeacherName() {
@@ -74,7 +74,7 @@ public class TeacherFormPresenter {
 	}
 
 	public int loadSubjects() {
-		subjectsCollection = subjectDto.getAll();
+		subjectsCollection = subjectDao.getAll();
 		return subjectsCollection.size();
 	}
 

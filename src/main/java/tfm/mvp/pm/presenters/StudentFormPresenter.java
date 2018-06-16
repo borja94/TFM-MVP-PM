@@ -5,21 +5,21 @@ import java.util.List;
 import javax.swing.DefaultListModel;
 
 import tfm.mvp.pm.models.Student;
-import tfm.mvp.pm.models.StudentDto;
+import tfm.mvp.pm.models.StudentDao;
 import tfm.mvp.pm.models.Subject;
-import tfm.mvp.pm.models.SubjectDto;
+import tfm.mvp.pm.models.SubjectDao;
 
 public class StudentFormPresenter {
 
-	private StudentDto studentDto;
-	private SubjectDto subjectDto;
+	private StudentDao studentDao;
+	private SubjectDao subjectDao;
 	private Student student;
 	private List<Subject> subjectsCollection;
 	private static final char ID_SUBJECT_SEPARATOR = '#';
 
 	public StudentFormPresenter() {
-		studentDto = new StudentDto();
-		subjectDto = new SubjectDto();
+		studentDao = new StudentDao();
+		subjectDao = new SubjectDao();
 	}
 
 	public void insertNewStudent(String name, String surname, DefaultListModel<String> assignedSubjectModel) {
@@ -31,7 +31,7 @@ public class StudentFormPresenter {
 			int aux = Integer.parseInt(subjectAux.substring(0, subjectAux.indexOf(ID_SUBJECT_SEPARATOR)));
 			studentAux.getSubjectCollection().add(new Subject(aux));
 		}
-		studentDto.insert(studentAux);
+		studentDao.insert(studentAux);
 
 	}
 
@@ -45,12 +45,12 @@ public class StudentFormPresenter {
 			studentAux.getSubjectCollection().add(new Subject(aux));
 		}
 
-		studentDto.update(studentAux);
+		studentDao.update(studentAux);
 
 	}
 
 	public void loadStudent(int id) {
-		student = studentDto.get(id);
+		student = studentDao.get(id);
 	}
 
 	public String getStudentName() {
@@ -74,7 +74,7 @@ public class StudentFormPresenter {
 	}
 
 	public int loadSubjects() {
-		subjectsCollection = subjectDto.getAll();
+		subjectsCollection = subjectDao.getAll();
 		return subjectsCollection.size();
 	}
 
