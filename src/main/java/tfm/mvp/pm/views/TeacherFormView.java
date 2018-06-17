@@ -1,7 +1,5 @@
 package tfm.mvp.pm.views;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,32 +69,20 @@ public class TeacherFormView extends JPanel implements ITeacherFormView{
 		nameInputLabel.setText("Nombre");
 
 		surnameInputLabel.setText("Apellidos");
-		teacherFormLabel.setText("Nuevo profesor");
+		teacherFormLabel.setText(NEW_TEACHER_LABEL_TEXT);
 
 		addSubjectButton.setText("-->");
-		addSubjectButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				addSubjectButtonActionPerformed();
-			}
-		});
+		addSubjectButton.addActionListener(e->addSubjectButtonActionPerformed());
 
 		removeSubjectButton.setText("<--");
-		removeSubjectButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				removeSubjectButtonActionPerformed();
-			}
-		});
+		removeSubjectButton.addActionListener(e->removeSubjectButtonActionPerformed());
 
 		unassignSubjectsInputLabel.setText("Asignaturas");
 
 		assignSubjectInputLabel.setText("Asignaturas seleccionadas");
 
 		saveFormButton.setText("Guardar");
-		saveFormButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				saveFormButtonActionPerformed();
-			}
-		});
+		saveFormButton.addActionListener(e->saveFormButtonActionPerformed());
 
 		unassignSubjectsScrollPane.setViewportView(unassignSubjectCollection);
 

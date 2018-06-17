@@ -41,7 +41,7 @@ public class StudentFormPresenter {
 
 		for (int i = 0; i < assignedSubjectModel.size(); i++) {
 			String subjectAux = assignedSubjectModel.getElementAt(i);
-			int aux = Integer.parseInt(subjectAux.substring(0, subjectAux.indexOf("#")));
+			int aux = Integer.parseInt(subjectAux.substring(0, subjectAux.indexOf(ID_SUBJECT_SEPARATOR)));
 			studentAux.getSubjectCollection().add(new Subject(aux));
 		}
 

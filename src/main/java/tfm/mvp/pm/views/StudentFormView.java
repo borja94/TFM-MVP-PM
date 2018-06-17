@@ -35,8 +35,8 @@ public class StudentFormView extends JPanel implements IStudentFormView {
 	private boolean editMode;
 	private int studentSelectedId;
 	private StudentFormPresenter studentFormPresenter;
-	private static final String NewStudentLabelText = "Nuevo alumno";
-	private static final String EditStudentLabelText = "Editar alumno";
+	private static final String NEW_STUDENT_LABEL_TEXT = "Nuevo alumno";
+	private static final String EDOT_STUDENT_LABEL_TEXT = "Editar alumno";
 
 	public StudentFormView() {
 		studentFormPresenter = new StudentFormPresenter();
@@ -59,7 +59,7 @@ public class StudentFormView extends JPanel implements IStudentFormView {
 		saveFormButton = new JButton();
 		assignSubjectPane = new JScrollPane();
 
-		studentFormLabel.setText(NewStudentLabelText);
+		studentFormLabel.setText(NEW_STUDENT_LABEL_TEXT);
 
 		nameInputLabel.setText("Nombre");
 
@@ -70,25 +70,13 @@ public class StudentFormView extends JPanel implements IStudentFormView {
 		assignSubjectPane.setViewportView(assignSubjectCollection);
 
 		addSubjectButton.setText("-->");
-		addSubjectButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				addSubjectButtonActionPerformed();
-			}
-		});
+		addSubjectButton.addActionListener(e->addSubjectButtonActionPerformed());
 
 		removeSubjectButton.setText("<--");
-		removeSubjectButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				removeSubjectButtonActionPerformed();
-			}
-		});
+		removeSubjectButton.addActionListener(e->removeSubjectButtonActionPerformed());
 
 		saveFormButton.setText("Guardar");
-		saveFormButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				saveFormButtonActionPerformed();
-			}
-		});
+		saveFormButton.addActionListener(e->saveFormButtonActionPerformed());
 
 		initComponentsPosition();
 	}
@@ -148,7 +136,7 @@ public class StudentFormView extends JPanel implements IStudentFormView {
 	}
 
 	public void newTeacherMode() {
-		studentFormLabel.setText(NewStudentLabelText);
+		studentFormLabel.setText(NEW_STUDENT_LABEL_TEXT);
 		nameInput.setText("");
 		surnameInput.setText("");
 		updateSubjectList(null);
@@ -157,7 +145,7 @@ public class StudentFormView extends JPanel implements IStudentFormView {
 	}
 
 	public void editTeacherMode(int id) {
-		studentFormLabel.setText(EditStudentLabelText);
+		studentFormLabel.setText(EDOT_STUDENT_LABEL_TEXT);
 		studentSelectedId = id;
 		editMode = true;
 		studentFormPresenter.loadStudent(id);

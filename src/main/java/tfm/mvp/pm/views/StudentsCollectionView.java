@@ -62,25 +62,13 @@ public class StudentsCollectionView extends JPanel {
 		jScrollPane1.setViewportView(studentsTable);
 
 		deleteStudentButton.setText("Borrar");
-		deleteStudentButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				deleteStudentButtonActionPerformed();
-			}
-		});
+		deleteStudentButton.addActionListener(e->deleteStudentButtonActionPerformed());
 
 		editStudentButton.setText("Modo edici�n");
-		editStudentButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				editStudentButtonActionPerformed();
-			}
-		});
+		editStudentButton.addActionListener(e->editStudentButtonActionPerformed());
 
 		newStudentButton.setText("Nuevo alumno");
-		newStudentButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				newStudentButtonActionPerformed();
-			}
-		});
+		newStudentButton.addActionListener(e->newStudentButtonActionPerformed());
 
 		initComponentsPosition();
 	}

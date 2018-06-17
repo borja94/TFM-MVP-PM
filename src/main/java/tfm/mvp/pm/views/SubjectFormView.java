@@ -49,11 +49,7 @@ public class SubjectFormView extends JPanel implements ISubjectFormView {
 		courseInpitLabel.setText("Curso");
 
 		saveButton.setText("Guardar");
-		saveButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				saveButtonActionPerformed(evt);
-			}
-		});
+		saveButton.addActionListener(e->saveButtonActionPerformed());
 
 		initComponentsPosition();
 	}
@@ -92,7 +88,7 @@ public class SubjectFormView extends JPanel implements ISubjectFormView {
 
 	}
 
-	private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {
+	private void saveButtonActionPerformed() {
 
 		String name = titleInput.getText();
 		String course = courseInput.getText();

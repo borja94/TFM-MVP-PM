@@ -1,7 +1,5 @@
 package tfm.mvp.pm.views;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BoxLayout;
 import javax.swing.GroupLayout;
@@ -11,23 +9,21 @@ import javax.swing.LayoutStyle;
 import javax.swing.WindowConstants;
 import javax.swing.JButton;
 
-
 public class TeachersFrame extends JFrame {
 
 	private MenuFrame menuFrame;
 	private TeacherFormView teacherFormView;
 	private TeacherCollectionView teacherCollectionView;
 
-	
 	public TeachersFrame(MenuFrame menuFrame) {
 		this.menuFrame = menuFrame;
-		
+
 		teacherFormView = new TeacherFormView();
 		teacherCollectionView = new TeacherCollectionView();
-		
+
 		teacherFormView.setTeacherCollectionView(teacherCollectionView);
 		teacherCollectionView.setTeacherFormView(teacherFormView);
-		
+
 		initComponents();
 	}
 
@@ -38,11 +34,7 @@ public class TeachersFrame extends JFrame {
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 
 		returnMenuFrameButton.setText("Volver");
-		returnMenuFrameButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				ReturnMenuFrameButtonActionPerformed();
-			}
-		});
+		returnMenuFrameButton.addActionListener(e -> returnMenuFrameButtonActionPerformed());
 
 		JPanel container = new JPanel();
 		container.setLayout(new BoxLayout(container, BoxLayout.X_AXIS));
@@ -79,7 +71,7 @@ public class TeachersFrame extends JFrame {
 		pack();
 	}
 
-	private void ReturnMenuFrameButtonActionPerformed() {
+	private void returnMenuFrameButtonActionPerformed() {
 		this.setVisible(false);
 		menuFrame.setVisible(true);
 		dispose();

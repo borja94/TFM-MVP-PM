@@ -65,25 +65,13 @@ public class TeacherCollectionView extends JPanel {
 		tableScrollPane.setViewportView(teachersTable);
 
 		deleteTeacherButton.setText("Borrar");
-		deleteTeacherButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				deleteTeacherButtonActionPerformed();
-			}
-		});
+		deleteTeacherButton.addActionListener(e->deleteTeacherButtonActionPerformed());
 
 		editTeacherButton.setText("Modo edición");
-		editTeacherButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				editTeacherButtonActionPerformed();
-			}
-		});
+		editTeacherButton.addActionListener(e->editTeacherButtonActionPerformed());
 
 		newTeacherButton.setText("Nuevo profesor");
-		newTeacherButton.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				newTeacherButtonActionPerformed();
-			}
-		});
+		newTeacherButton.addActionListener(e->newTeacherButtonActionPerformed());
 
 		initComponentPostions();
 	}
