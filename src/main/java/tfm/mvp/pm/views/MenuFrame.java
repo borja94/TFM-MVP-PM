@@ -12,7 +12,7 @@ public class MenuFrame extends JFrame {
 	private StudentsFrame studentsFrame;
 
 	public MenuFrame() {
-		MenuPanel menuPanel = new MenuPanel();
+		MainView menuPanel = new MainView();
 		this.setContentPane(menuPanel);
 		initComponents();
 		subjectsFrame = new SubjectsFrame(this);

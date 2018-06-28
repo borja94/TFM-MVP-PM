@@ -2,19 +2,23 @@ package tfm.mvp.pm.views;
 
 import javax.swing.JPanel;
 import javax.swing.LayoutStyle;
+
+import tfm.mvp.pm.presenters.MainPresenter;
+
 import javax.swing.GroupLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-public class MenuPanel extends JPanel {
+public class MainView extends JPanel {
 
 	private JButton teacherFrameButton;
 	private JButton studentFrameButton;
 	private JButton subjectFrameButton;
 	private JLabel menuLabel;
+	private MainPresenter mainPresenter;
 
-	public MenuPanel() {
-
+	public MainView() {
+		mainPresenter = new MainPresenter();
 		initComponents();
 	}
 
@@ -26,9 +30,9 @@ public class MenuPanel extends JPanel {
 		subjectFrameButton = new JButton();
 
 		menuLabel.setText("Menú");
-		teacherFrameButton.setText("Profesores");
-		studentFrameButton.setText("Alumnos");
-		subjectFrameButton.setText("Asignaturas");
+		teacherFrameButton.setText("Profesores --> Nº Profesores:"+ mainPresenter.getNumTeachers() );
+		studentFrameButton.setText("Alumnos --> Nº Alumnos:"+mainPresenter.getNumStudents());
+		subjectFrameButton.setText("Asignaturas --> Nº Asignaturas:"+mainPresenter.getNumSubjects());
 		initComponentsPosition();
 
 	}
@@ -68,5 +72,4 @@ public class MenuPanel extends JPanel {
 	public JButton getSubjectFrameButton() {
 		return subjectFrameButton;
 	}
-
 }
